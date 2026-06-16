@@ -30,3 +30,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Brand kit working files (only public/brand/ assets are used by the app)
+.brandkit/

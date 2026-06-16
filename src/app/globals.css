@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .navbar {
-  @apply flex flex-col items-center bg-green-900 text-white sticky top-0 transition-all z-50 duration-700;
+  @apply flex flex-col items-center bg-forest text-cream sticky top-0 transition-all z-50 duration-700;
 }
 
 .banner-button {
-  @apply text-white bg-transparent text-sm inline-block max-w-max border border-white px-[10px] py-[5px] rounded-2xl;
+  @apply text-cream bg-transparent text-sm inline-block max-w-max border border-cream/70 px-[10px] py-[5px] rounded-2xl hover:bg-cream/10 transition;
 }

@@ -13,14 +13,17 @@ const Banner = () => {
     loop: true,
   });
   return (
-    <div className="flex justify-center bg-green-900 text-white h-[600px]">
+    <div className="flex justify-center bg-forest text-cream h-[600px]">
       <div className="flex items-center w-[1400px]">
         <div className="flex flex-col gap-[30px]">
-          <h1 className="text-5xl">
+          <h1 className="text-5xl leading-tight">
             Find the perfect{" "}
-            <span className="italic font-light">freelance</span> services for
-            your business
+            <span className="italic font-light text-olive">freelance</span>{" "}
+            talent for your business
           </h1>
+          <p className="text-lg font-light text-cream/80 -mt-2">
+            We Keep it Human.
+          </p>
           <div className="bg-white rounded flex items-center justify-between overflow-hidden">
             <div className="flex gap-[10px] w-full pr-2">
               <img
@@ -34,7 +37,7 @@ const Banner = () => {
                 placeholder={`Try "${text}"`}
               />
             </div>
-            <button className="w-32 h-12 bg-green-600 text-white self-end cursor-pointer">
+            <button className="w-32 h-12 bg-cobalt text-white self-end cursor-pointer hover:bg-cobalt/90 transition">
               Search
             </button>
           </div>

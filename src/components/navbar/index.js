@@ -34,16 +34,23 @@ const Navbar = () => {
       } `}
     >
       <div className="flex items-center justify-between w-[1400px] px-0 py-5">
-        <div className="text-4xl font-bold">
+        <div className="flex items-center">
           <Link className="link" href="/">
-            <span className="text">fiverr</span>
+            <img
+              src={
+                active || pathname !== "/"
+                  ? "/brand/td_primary_forest.svg"
+                  : "/brand/td_primary_cream.svg"
+              }
+              alt="TopDoerr"
+              className="h-9 w-auto"
+            />
           </Link>
-          <span className="font-bold text-green-600">.</span>
         </div>
         {/* LINKS */}
         <div className="flex items-center font-bold gap-6 font-sans">
           <span className="whitespace-no-wrap cursor-pointer">
-            Fiverr Business
+            TopDoerr Business
           </span>
           <span className="whitespace-no-wrap cursor-pointer">Explore</span>
           <span className="whitespace-no-wrap cursor-pointer">English</span>
@@ -96,9 +103,9 @@ const Navbar = () => {
                 <button
                   className={`${
                     active || pathname !== "/"
-                      ? "text-green-600 border-green-600 hover:text-white"
-                      : "text-white border-white"
-                  }  rounded bg-transparent cursor-pointer border px-3 py-2 hover:bg-green-600 transition duration-300 ease-linear`}
+                      ? "text-cobalt border-cobalt hover:text-white"
+                      : "text-cream border-cream"
+                  }  rounded bg-transparent cursor-pointer border px-3 py-2 hover:bg-cobalt hover:border-cobalt transition duration-300 ease-linear`}
                 >
                   Join
                 </button>
