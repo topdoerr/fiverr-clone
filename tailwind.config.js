@@ -8,7 +8,7 @@ module.exports = {
         cream: "#F5F4EE",
         forest: "#1C1C14",
         cobalt: "#0047AB",
-        olive: "#5C6B2E",
+        lime: "#C7F73E",
       },
       fontFamily: {
         sans: [

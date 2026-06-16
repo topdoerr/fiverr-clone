@@ -101,11 +101,7 @@ const Navbar = () => {
               <span className="whitespace-no-wrap cursor-pointer">Sign in</span>
               <Link className="link" href="/register">
                 <button
-                  className={`${
-                    active || pathname !== "/"
-                      ? "text-cobalt border-cobalt hover:text-white"
-                      : "text-cream border-cream"
-                  }  rounded bg-transparent cursor-pointer border px-3 py-2 hover:bg-cobalt hover:border-cobalt transition duration-300 ease-linear`}
+                  className="bg-lime text-forest font-bold rounded cursor-pointer border border-lime px-4 py-2 hover:bg-lime/90 transition duration-300 ease-linear"
                 >
                   Join
                 </button>

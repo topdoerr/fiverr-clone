@@ -18,7 +18,7 @@ const Banner = () => {
         <div className="flex flex-col gap-[30px]">
           <h1 className="text-5xl leading-tight">
             Find the perfect{" "}
-            <span className="italic font-light text-olive">freelance</span>{" "}
+            <span className="italic font-light text-lime">freelance</span>{" "}
             talent for your business
           </h1>
           <p className="text-lg font-light text-cream/80 -mt-2">
@@ -37,7 +37,7 @@ const Banner = () => {
                 placeholder={`Try "${text}"`}
               />
             </div>
-            <button className="w-32 h-12 bg-cobalt text-white self-end cursor-pointer hover:bg-cobalt/90 transition">
+            <button className="w-32 h-12 bg-lime text-forest font-bold self-end cursor-pointer hover:bg-lime/90 transition">
               Search
             </button>
           </div>
