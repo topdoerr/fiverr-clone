@@ -33,3 +33,7 @@ yarn-error.log*
 
 # Brand kit working files (only public/brand/ assets are used by the app)
 .brandkit/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,58 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { footerNav } from "@/lib/data";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-white/10 bg-ink text-white">
+      <div className="container-tight py-16">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="space-y-5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/td_primary_cream.svg"
+              alt="TopDoerr"
+              className="h-8 w-auto"
+            />
+            <p className="max-w-xs text-sm text-white/60">
+              Buy AI outcomes. Delivered by TopDoerr. Internal talent, AI speed,
+              human review.
+            </p>
+            <Button asChild variant="electric" size="sm">
+              <Link href="/start">
+                Start a Project
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {footerNav.map((col) => (
+            <div key={col.title}>
+              <h3 className="text-sm font-semibold text-white">{col.title}</h3>
+              <ul className="mt-4 space-y-3">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-white/60 transition-colors hover:text-electric"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row sm:items-center">
+          <p>© {new Date().getFullYear()} TopDoerr. We Keep It Human.</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-white/40">
+            Spanish-first · Built for Puerto Rico &amp; LATAM
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}

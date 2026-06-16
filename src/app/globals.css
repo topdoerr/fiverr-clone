@@ -2,10 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
-.navbar {
-  @apply flex flex-col items-center bg-forest text-cream sticky top-0 transition-all z-50 duration-700;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 6% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 7%;
+
+    --primary: 240 6% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 42%;
+
+    --accent: 76 92% 60%;
+    --accent-foreground: 240 6% 8%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 6% 8%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv01", "cv03";
+  }
+
+  ::selection {
+    background: #c7f73e;
+    color: #0a0a0b;
+  }
 }
 
-.banner-button {
-  @apply text-cream bg-transparent text-sm inline-block max-w-max border border-cream/70 px-[10px] py-[5px] rounded-2xl hover:bg-cream/10 transition;
+@layer components {
+  .container-tight {
+    @apply mx-auto w-full max-w-6xl px-6;
+  }
+
+  /* Subtle dotted/grid backdrop used on dark sections */
+  .bg-grid-dark {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 0
+    );
+    background-size: 28px 28px;
+  }
+
+  .bg-grid-light {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(10, 10, 11, 0.05) 1px,
+      transparent 0
+    );
+    background-size: 28px 28px;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .glow-electric {
+    box-shadow: 0 0 0 1px rgba(199, 247, 62, 0.25),
+      0 8px 40px -12px rgba(199, 247, 62, 0.45);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gradient-ink {
+    @apply bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-transparent;
+  }
+}
+
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(240 5% 84%);
+  border-radius: 999px;
+  border: 3px solid #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(240 5% 72%);
 }
