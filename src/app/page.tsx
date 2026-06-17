@@ -16,8 +16,9 @@ import { OutcomeCard } from "@/components/outcome-card";
 import { ComparisonTable } from "@/components/comparison-table";
 import { DeliveryProcess } from "@/components/delivery-process";
 import { FaqAccordion } from "@/components/faq-accordion";
-import { CTASection } from "@/components/cta-section";
 import { PromoBanners } from "@/components/promo-banners";
+import { GuidesSection } from "@/components/guides-section";
+import { BigCta } from "@/components/big-cta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -200,37 +201,8 @@ export default function HomePage() {
         </Reveal>
       </Section>
 
-      {/* Quality control / SLA */}
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
-          <SectionHeading
-            eyebrow="Quality control & SLA"
-            title="Internal talent. AI speed. Human review."
-            description="Every delivery passes a standardized review for strategy, brand, accuracy, and security before it reaches you. Larger engagements run on SLAs with milestone reviews."
-          />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {[
-              { value: "100%", label: "Human-reviewed delivery" },
-              { value: "1", label: "Accountable brand" },
-              { value: "0", label: "Random freelancers" },
-              { value: "QA", label: "Standardized review gate" },
-              { value: "SLA", label: "Enterprise delivery" },
-              { value: "ES", label: "Spanish-first" },
-            ].map((stat, i) => (
-              <Reveal key={stat.label} delay={(i % 3) * 0.05}>
-                <div className="rounded-2xl border border-border bg-card p-5">
-                  <div className="font-display text-2xl font-semibold text-foreground">
-                    {stat.value}
-                  </div>
-                  <div className="mt-1 text-xs leading-snug text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
+      {/* Guides */}
+      <GuidesSection />
 
       {/* Testimonials */}
       <Section className="bg-secondary/30">
@@ -278,7 +250,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <CTASection />
+      <BigCta />
     </>
   );
 }
