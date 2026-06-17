@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useApp } from "@/lib/dashboard/store";
 
 export default function LoginPage() {
-  const { login } = useApp();
+  const { login, authMode } = useApp();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -83,6 +83,11 @@ export default function LoginPage() {
             Create account
           </Link>
         </p>
+        {authMode === "supabase" && (
+          <p className="text-center text-xs text-forest/40">
+            🔒 Secured by Supabase
+          </p>
+        )}
       </form>
     </AuthShell>
   );

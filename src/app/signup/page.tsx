@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useApp } from "@/lib/dashboard/store";
 
 export default function SignupPage() {
-  const { signup } = useApp();
+  const { signup, authMode } = useApp();
   const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
@@ -143,6 +143,11 @@ export default function SignupPage() {
             Log in
           </Link>
         </p>
+        {authMode === "supabase" && (
+          <p className="text-center text-xs text-forest/40">
+            🔒 Secured by Supabase
+          </p>
+        )}
       </form>
     </AuthShell>
   );
