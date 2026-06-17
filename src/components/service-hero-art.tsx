@@ -32,6 +32,8 @@ function Motif({ motif }: { motif: string }) {
               rx={6}
               fill={i % 2 ? C : "#ffffff"}
               fillOpacity={i % 2 ? 0.85 : 0.14}
+              className="td-eq"
+              style={{ animationDelay: `${(i % 7) * 0.11}s` }}
             />
           ))}
         </g>
@@ -67,22 +69,29 @@ function Motif({ motif }: { motif: string }) {
               x2={n[b][0]}
               y2={n[b][1]}
               stroke={C}
-              strokeOpacity="0.35"
+              strokeOpacity="0.4"
               strokeWidth="1.5"
+              className="td-dash"
+              style={{ animationDelay: `${i * 0.15}s` }}
             />
           ))}
-          {n.map((p, i) => (
-            <circle
-              key={i}
-              cx={p[0]}
-              cy={p[1]}
-              r={i % 3 ? 8 : 13}
-              fill={i % 3 ? "#ffffff" : C}
-              fillOpacity={i % 3 ? 0.14 : 0.9}
-              stroke={C}
-              strokeOpacity="0.5"
-            />
-          ))}
+          {n.map((p, i) => {
+            const accent = i % 3 === 0;
+            return (
+              <circle
+                key={i}
+                cx={p[0]}
+                cy={p[1]}
+                r={accent ? 13 : 8}
+                fill={accent ? C : "#ffffff"}
+                fillOpacity={accent ? 0.9 : 0.14}
+                stroke={C}
+                strokeOpacity="0.5"
+                className={accent ? "td-pulse" : undefined}
+                style={accent ? { animationDelay: `${i * 0.4}s` } : undefined}
+              />
+            );
+          })}
         </g>
       );
     }
@@ -111,7 +120,15 @@ function Motif({ motif }: { motif: string }) {
             strokeOpacity="0.85"
           />
           {h.map((v, i) => (
-            <circle key={`d${i}`} cx={55 + i * 49} cy={272 - v - 12} r="3.5" fill={Csoft} />
+            <circle
+              key={`d${i}`}
+              cx={55 + i * 49}
+              cy={272 - v - 12}
+              r="3.5"
+              fill={Csoft}
+              className="td-pulse"
+              style={{ animationDelay: `${i * 0.25}s` }}
+            />
           ))}
         </g>
       );
@@ -139,18 +156,22 @@ function Motif({ motif }: { motif: string }) {
             strokeWidth="3"
             strokeOpacity="0.9"
           />
-          {pts.map((p, i) => (
-            <circle
-              key={i}
-              cx={p[0]}
-              cy={p[1]}
-              r={i === pts.length - 1 ? 6 : 4.5}
-              fill={i === pts.length - 1 ? C : "#ffffff"}
-              fillOpacity={i === pts.length - 1 ? 1 : 0.25}
-              stroke={C}
-              strokeOpacity="0.5"
-            />
-          ))}
+          {pts.map((p, i) => {
+            const last = i === pts.length - 1;
+            return (
+              <circle
+                key={i}
+                cx={p[0]}
+                cy={p[1]}
+                r={last ? 6 : 4.5}
+                fill={last ? C : "#ffffff"}
+                fillOpacity={last ? 1 : 0.25}
+                stroke={C}
+                strokeOpacity="0.5"
+                className={last ? "td-pulse" : undefined}
+              />
+            );
+          })}
         </g>
       );
     }
@@ -158,8 +179,17 @@ function Motif({ motif }: { motif: string }) {
       return (
         <g>
           <rect x="40" y="66" width="220" height="92" rx="24" fill={C} fillOpacity="0.9" />
-          {[88, 128, 168].map((cx) => (
-            <circle key={cx} cx={cx} cy="112" r="9" fill="#ffffff" fillOpacity="0.85" />
+          {[88, 128, 168].map((cx, i) => (
+            <circle
+              key={cx}
+              cx={cx}
+              cy="112"
+              r="9"
+              fill="#ffffff"
+              fillOpacity="0.85"
+              className="td-twinkle"
+              style={{ animationDelay: `${i * 0.22}s` }}
+            />
           ))}
           <rect
             x="150"
@@ -188,7 +218,7 @@ function Motif({ motif }: { motif: string }) {
           <rect x="82" y="120" width="150" height="14" rx="7" fill={C} fillOpacity="0.8" />
           <rect x="82" y="148" width="250" height="10" rx="5" fill="#ffffff" fillOpacity="0.14" />
           <rect x="82" y="170" width="210" height="10" rx="5" fill="#ffffff" fillOpacity="0.12" />
-          <rect x="82" y="202" width="112" height="30" rx="9" fill={C} fillOpacity="0.6" />
+          <rect x="82" y="202" width="112" height="30" rx="9" fill={C} fillOpacity="0.6" className="td-glow" />
         </g>
       );
     }
@@ -220,7 +250,11 @@ function Motif({ motif }: { motif: string }) {
             transform="rotate(7 240 170)"
           />
           <path d="M222 148 L266 172 L222 196 Z" fill="#ffffff" fillOpacity="0.9" />
-          <path d="M324 64 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7 l18 -7 Z" fill={C} />
+          <path
+            d="M324 64 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7 l18 -7 Z"
+            fill={C}
+            className="td-twinkle"
+          />
         </g>
       );
     }
@@ -230,21 +264,31 @@ function Motif({ motif }: { motif: string }) {
           {[120, 90, 60].map((r) => (
             <circle key={r} r={r} fill="none" stroke={C} strokeOpacity={r === 120 ? 0.25 : 0.4} />
           ))}
-          {Array.from({ length: 12 }).map((_, i) => {
-            const a = (i * 30 * Math.PI) / 180;
-            return (
-              <line
-                key={i}
-                x1={Math.cos(a) * 112}
-                y1={Math.sin(a) * 112}
-                x2={Math.cos(a) * 120}
-                y2={Math.sin(a) * 120}
-                stroke="#ffffff"
-                strokeOpacity="0.2"
-              />
-            );
-          })}
-          <path d="M0,-72 L15,0 L0,72 L-15,0 Z" fill={C} fillOpacity="0.85" />
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 0 0"
+              to="360 0 0"
+              dur="44s"
+              repeatCount="indefinite"
+            />
+            {Array.from({ length: 12 }).map((_, i) => {
+              const a = (i * 30 * Math.PI) / 180;
+              return (
+                <line
+                  key={i}
+                  x1={Math.cos(a) * 112}
+                  y1={Math.sin(a) * 112}
+                  x2={Math.cos(a) * 120}
+                  y2={Math.sin(a) * 120}
+                  stroke="#ffffff"
+                  strokeOpacity="0.2"
+                />
+              );
+            })}
+          </g>
+          <path d="M0,-72 L15,0 L0,72 L-15,0 Z" fill={C} fillOpacity="0.85" className="td-glow" />
           <circle r="7" fill="#ffffff" />
         </g>
       );
@@ -274,8 +318,10 @@ function Motif({ motif }: { motif: string }) {
               x2={boxes[b][0] + 24}
               y2={boxes[b][1] + 24}
               stroke={C}
-              strokeOpacity="0.3"
+              strokeOpacity="0.35"
               strokeWidth="1.5"
+              className="td-dash"
+              style={{ animationDelay: `${i * 0.2}s` }}
             />
           ))}
           {boxes.map((p, i) => (
@@ -290,6 +336,8 @@ function Motif({ motif }: { motif: string }) {
               fillOpacity={i % 2 ? 0.8 : 0.1}
               stroke={C}
               strokeOpacity="0.4"
+              className={i % 2 ? "td-pulse" : undefined}
+              style={i % 2 ? { animationDelay: `${i * 0.3}s` } : undefined}
             />
           ))}
         </g>
@@ -305,6 +353,7 @@ function Motif({ motif }: { motif: string }) {
             stroke={C}
             strokeOpacity="0.5"
             strokeWidth="2"
+            className="td-glow"
           />
           <path
             d="M0,-72 L60,-48 L60,8 C60,56 30,82 0,96 C-30,82 -60,56 -60,8 L-60,-48 Z"
@@ -351,7 +400,9 @@ export function ServiceHeroArt({
         className="absolute right-4 top-1/2 h-[78%] -translate-y-1/2"
         fill="none"
       >
-        <Motif motif={motif} />
+        <g className="td-float">
+          <Motif motif={motif} />
+        </g>
       </svg>
     </div>
   );

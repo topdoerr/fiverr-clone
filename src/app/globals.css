@@ -106,3 +106,41 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(240 5% 72%);
 }
+
+/* Service hero motif animations */
+@keyframes td-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes td-eq {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1); }
+}
+@keyframes td-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+@keyframes td-twinkle {
+  0%, 100% { transform: scale(0.6); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+@keyframes td-glow {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+@keyframes td-dash {
+  to { stroke-dashoffset: -28; }
+}
+
+.td-float { animation: td-float 7s ease-in-out infinite; }
+.td-eq { transform-box: fill-box; transform-origin: center; animation: td-eq 1.3s ease-in-out infinite; }
+.td-pulse { transform-box: fill-box; transform-origin: center; animation: td-pulse 3.2s ease-in-out infinite; }
+.td-twinkle { transform-box: fill-box; transform-origin: center; animation: td-twinkle 2.4s ease-in-out infinite; }
+.td-glow { animation: td-glow 3.4s ease-in-out infinite; }
+.td-dash { stroke-dasharray: 5 9; animation: td-dash 1.4s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .td-float, .td-eq, .td-pulse, .td-twinkle, .td-glow, .td-dash {
+    animation: none;
+  }
+}
