@@ -39,7 +39,7 @@ export default function HomePage() {
 
       {/* Popular AI outcomes */}
       <section className="py-20 sm:py-28">
-        <div className="mx-auto w-full max-w-[1440px] px-6">
+        <div className="mx-auto w-full max-w-[1700px] px-6">
           <SectionHeading
             eyebrow="Popular AI outcomes"
             title="What do you want AI to do?"
