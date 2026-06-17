@@ -17,6 +17,7 @@ import { ComparisonTable } from "@/components/comparison-table";
 import { DeliveryProcess } from "@/components/delivery-process";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { CTASection } from "@/components/cta-section";
+import { PromoBanners } from "@/components/promo-banners";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -82,6 +83,9 @@ export default function HomePage() {
           ))}
         </div>
       </Section>
+
+      {/* Promo banners */}
+      <PromoBanners />
 
       {/* How TopDoerr delivers */}
       <Section>
