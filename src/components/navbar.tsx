@@ -7,12 +7,18 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/lib/data";
+import { useApp } from "@/lib/dashboard/store";
 import { cn } from "@/lib/utils";
+
+function openAuth(mode: "join" | "signin") {
+  window.dispatchEvent(new CustomEvent("td:open-auth", { detail: { mode } }));
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { isAuthed } = useApp();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -60,15 +66,37 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/marketplace">Explore Services</Link>
-          </Button>
-          <Button asChild variant="electric" size="sm">
-            <Link href="/start">
-              Start a Project
-              <ArrowRight className="size-4" />
-            </Link>
-          </Button>
+          {isAuthed ? (
+            <>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/marketplace">Explore Services</Link>
+              </Button>
+              <Button asChild variant="electric" size="sm">
+                <Link href="/dashboard">
+                  Go to Dashboard
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => openAuth("signin")}
+              >
+                Sign in
+              </Button>
+              <Button
+                variant="electric"
+                size="sm"
+                onClick={() => openAuth("join")}
+              >
+                Join TopDoerr
+                <ArrowRight className="size-4" />
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -93,15 +121,29 @@ export function Navbar() {
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2">
-              <Button asChild variant="outline">
-                <Link href="/marketplace">Explore Services</Link>
-              </Button>
-              <Button asChild variant="electric">
-                <Link href="/start">
-                  Start a Project
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
+              {isAuthed ? (
+                <>
+                  <Button asChild variant="outline">
+                    <Link href="/marketplace">Explore Services</Link>
+                  </Button>
+                  <Button asChild variant="electric">
+                    <Link href="/dashboard">
+                      Go to Dashboard
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" onClick={() => openAuth("signin")}>
+                    Sign in
+                  </Button>
+                  <Button variant="electric" onClick={() => openAuth("join")}>
+                    Join TopDoerr
+                    <ArrowRight className="size-4" />
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
