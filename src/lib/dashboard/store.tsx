@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -32,7 +33,15 @@ import {
   getSupabaseBrowser,
   isSupabaseConfigured,
 } from "@/lib/supabase/client";
+import * as db from "./db";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+
+function uuid() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return `id_${Math.random().toString(36).slice(2, 11)}`;
+}
 
 function mapSupabaseUser(u: SupabaseUser): User {
   const meta = (u.user_metadata ?? {}) as Record<string, string>;
@@ -127,9 +136,68 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  // Hydrate persisted state on mount + sync auth
+  // Latest user id, for DB writes inside stable callbacks.
+  const userIdRef = useRef<string | null>(null);
   useEffect(() => {
-    // Restore non-auth app data from localStorage (always).
+    userIdRef.current = state.user?.id ?? null;
+  }, [state.user?.id]);
+
+  // Hydrate state on mount + sync auth
+  useEffect(() => {
+    if (isSupabaseConfigured) {
+      // Supabase is the source of truth: no mock data for real users.
+      const supabase = getSupabaseBrowser();
+      if (!supabase) {
+        setHydrated(true);
+        return;
+      }
+      setState((s) => ({
+        ...s,
+        projects: [],
+        messages: [],
+        files: [],
+        invoices: [],
+        company: null,
+      }));
+
+      const loadFor = async (session: { user: SupabaseUser } | null) => {
+        if (session) {
+          setState((s) => ({ ...s, user: mapSupabaseUser(session.user) }));
+          const data = await db.loadUserData();
+          if (data) {
+            setState((s) => ({
+              ...s,
+              company: data.company,
+              projects: data.projects,
+              messages: data.messages,
+              files: data.files,
+              invoices: data.invoices,
+            }));
+          }
+        } else {
+          setState((s) => ({
+            ...s,
+            user: null,
+            company: null,
+            projects: [],
+            messages: [],
+            files: [],
+            invoices: [],
+          }));
+        }
+      };
+
+      supabase.auth.getSession().then(async ({ data }) => {
+        await loadFor(data.session);
+        setHydrated(true);
+      });
+      const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+        void loadFor(session);
+      });
+      return () => sub.subscription.unsubscribe();
+    }
+
+    // Local fallback: restore from localStorage (mock seed).
     let parsed: Partial<AppState> | null = null;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -139,44 +207,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
     setState((s) => ({
       ...s,
+      user: parsed?.user ?? null,
       company: parsed?.company ?? null,
       projects: parsed?.projects ?? s.projects,
       messages: parsed?.messages ?? s.messages,
       files: parsed?.files ?? s.files,
       invoices: parsed?.invoices ?? s.invoices,
     }));
-
-    if (isSupabaseConfigured) {
-      // Supabase is the source of truth for the user/session.
-      const supabase = getSupabaseBrowser();
-      if (!supabase) {
-        setHydrated(true);
-        return;
-      }
-      supabase.auth.getSession().then(({ data }) => {
-        setState((s) => ({
-          ...s,
-          user: data.session ? mapSupabaseUser(data.session.user) : null,
-        }));
-        setHydrated(true);
-      });
-      const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-        setState((s) => ({
-          ...s,
-          user: session ? mapSupabaseUser(session.user) : null,
-        }));
-      });
-      return () => sub.subscription.unsubscribe();
-    }
-
-    // Local placeholder auth: restore user from localStorage.
-    setState((s) => ({ ...s, user: parsed?.user ?? null }));
     setHydrated(true);
   }, []);
 
-  // Persist on change (after hydration)
+  // Persist on change (local fallback only; Supabase is the source of truth).
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || isSupabaseConfigured) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
@@ -283,17 +326,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ...s,
       company: { ...(s.company ?? mockCompany), ...data },
     }));
+    const uid = userIdRef.current;
+    if (isSupabaseConfigured && uid) {
+      const company: Company = {
+        id: uuid(),
+        userId: uid,
+        name: data.name ?? "",
+        website: data.website,
+        industry: data.industry,
+        size: data.size,
+        location: data.location,
+        tools: data.tools ?? [],
+        goals: data.goals ?? [],
+        createdAt: new Date().toISOString(),
+      };
+      db.upsertCompany(company, uid)
+        .then((saved) => {
+          if (saved) setState((s) => ({ ...s, company: saved }));
+        })
+        .catch(() => {});
+    }
   }, []);
 
   const submitBrief = useCallback((brief: Brief) => {
-    const projectId = id("prj");
+    const uid = userIdRef.current;
+    const projectId = uuid();
     const category = categoryByType[brief.projectType] ?? "AI Strategy & Consulting";
     const pod =
       podTemplates[brief.projectType] ?? podTemplates.default;
     const project: Project = {
       id: projectId,
-      companyId: "co_topdoerr",
-      userId: "usr_kevin",
+      companyId: "",
+      userId: uid ?? "usr_kevin",
       title: brief.title || "New AI Project",
       category,
       packageName: "Custom Scope",
@@ -339,7 +403,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updatedAt: new Date().toISOString(),
     };
     const invoice: Invoice = {
-      id: id("inv"),
+      id: uuid(),
       projectId,
       packageName: "Custom Scope",
       amount: 0,
@@ -350,61 +414,58 @@ export function AppProvider({ children }: { children: ReactNode }) {
       projects: [project, ...s.projects],
       invoices: [invoice, ...s.invoices],
     }));
+    if (isSupabaseConfigured && uid) {
+      db.insertProject(project, uid).catch(() => {});
+      db.insertBrief({ ...brief, projectId }, uid, projectId).catch(() => {});
+      db.insertInvoice(invoice, uid).catch(() => {});
+    }
     return projectId;
   }, []);
 
-  const updateProject = useCallback(
-    (projectId: string, patch: Partial<Project>) => {
+  const requestRevision = useCallback(
+    (projectId: string, what: string, priority: string) => {
+      const uid = userIdRef.current;
+      const msg: ProjectMessage = {
+        id: uuid(),
+        projectId,
+        senderType: "buyer",
+        senderName: "You",
+        body: `Revision requested (${priority}): ${what}`,
+        createdAt: new Date().toISOString(),
+      };
       setState((s) => ({
         ...s,
         projects: s.projects.map((p) =>
-          p.id === projectId ? { ...p, ...patch, updatedAt: new Date().toISOString() } : p
+          p.id === projectId
+            ? { ...p, status: "Revision Requested" as ProjectStatus, updatedAt: new Date().toISOString() }
+            : p
         ),
+        messages: [...s.messages, msg],
       }));
-    },
-    []
-  );
-
-  const requestRevision = useCallback(
-    (projectId: string, what: string, priority: string) => {
-      updateProject(projectId, { status: "Revision Requested" as ProjectStatus });
-      setState((s) => ({
-        ...s,
-        messages: [
-          ...s.messages,
-          {
-            id: id("msg"),
-            projectId,
-            senderType: "buyer",
-            senderName: "You",
-            body: `Revision requested (${priority}): ${what}`,
-            createdAt: new Date().toISOString(),
-          },
-        ],
-      }));
+      if (isSupabaseConfigured && uid) {
+        db.updateProjectRow(projectId, { status: "Revision Requested" }).catch(() => {});
+        db.insertMessage(msg, uid).catch(() => {});
+      }
       toast("Revision request sent to TopDoerr.");
     },
-    [toast, updateProject]
+    [toast]
   );
 
   const uploadFile = useCallback(
     (projectId: string, file: { name: string; type: string; size: string }) => {
-      setState((s) => ({
-        ...s,
-        files: [
-          {
-            id: id("f"),
-            projectId,
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            uploadedBy: "buyer",
-            url: "#",
-            createdAt: new Date().toISOString(),
-          },
-          ...s.files,
-        ],
-      }));
+      const uid = userIdRef.current;
+      const f: ProjectFile = {
+        id: uuid(),
+        projectId,
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        uploadedBy: "buyer",
+        url: "#",
+        createdAt: new Date().toISOString(),
+      };
+      setState((s) => ({ ...s, files: [f, ...s.files] }));
+      if (isSupabaseConfigured && uid) db.insertFile(f, uid).catch(() => {});
       toast("File uploaded successfully.");
     },
     [toast]
@@ -412,30 +473,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const sendMessage = useCallback(
     (projectId: string, body: string) => {
-      setState((s) => ({
-        ...s,
-        messages: [
-          ...s.messages,
-          {
-            id: id("msg"),
-            projectId,
-            senderType: "buyer",
-            senderName: "You",
-            body,
-            createdAt: new Date().toISOString(),
-          },
-        ],
-      }));
+      const uid = userIdRef.current;
+      const msg: ProjectMessage = {
+        id: uuid(),
+        projectId,
+        senderType: "buyer",
+        senderName: "You",
+        body,
+        createdAt: new Date().toISOString(),
+      };
+      setState((s) => ({ ...s, messages: [...s.messages, msg] }));
+      if (isSupabaseConfigured && uid) db.insertMessage(msg, uid).catch(() => {});
     },
     []
   );
 
   const approveProject = useCallback(
     (projectId: string) => {
-      updateProject(projectId, { status: "Completed" as ProjectStatus, progress: 100 });
+      const uid = userIdRef.current;
+      setState((s) => ({
+        ...s,
+        projects: s.projects.map((p) =>
+          p.id === projectId
+            ? { ...p, status: "Completed" as ProjectStatus, progress: 100, updatedAt: new Date().toISOString() }
+            : p
+        ),
+      }));
+      if (isSupabaseConfigured && uid) {
+        db.updateProjectRow(projectId, { status: "Completed", progress: 100 }).catch(() => {});
+      }
       toast("Project approved. Thank you!");
     },
-    [toast, updateProject]
+    [toast]
   );
 
   const getProject = useCallback(
