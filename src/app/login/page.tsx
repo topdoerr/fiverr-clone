@@ -14,10 +14,19 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [authError, setAuthError] = useState("");
 
-  const onSubmit = (ev: React.FormEvent) => {
+  const onSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
-    login(email);
+    setAuthError("");
+    setSubmitting(true);
+    const { error } = await login(email, password);
+    setSubmitting(false);
+    if (error) {
+      setAuthError(error);
+      return;
+    }
     router.push("/dashboard");
   };
 
@@ -52,8 +61,20 @@ export default function LoginPage() {
           />
         </div>
 
-        <Button type="submit" variant="lime" size="lg" className="w-full">
-          Log In
+        {authError && (
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+            {authError}
+          </p>
+        )}
+
+        <Button
+          type="submit"
+          variant="lime"
+          size="lg"
+          className="w-full"
+          disabled={submitting}
+        >
+          {submitting ? "Signing in…" : "Log In"}
         </Button>
 
         <p className="text-center text-sm text-forest/60">

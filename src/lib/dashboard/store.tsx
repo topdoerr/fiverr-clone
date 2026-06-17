@@ -28,6 +28,23 @@ import type {
   Brief,
   ProjectStatus,
 } from "./types";
+import {
+  getSupabaseBrowser,
+  isSupabaseConfigured,
+} from "@/lib/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+
+function mapSupabaseUser(u: SupabaseUser): User {
+  const meta = (u.user_metadata ?? {}) as Record<string, string>;
+  return {
+    id: u.id,
+    fullName: meta.full_name || u.email?.split("@")[0] || "User",
+    email: u.email ?? "",
+    phone: meta.phone,
+    role: "buyer",
+    createdAt: u.created_at ?? new Date().toISOString(),
+  };
+}
 
 /* ------------------------------------------------------------------ toasts */
 
@@ -59,7 +76,10 @@ interface SignupInput {
   phone?: string;
   companyName: string;
   website?: string;
+  password: string;
 }
+
+type AuthResult = { error?: string };
 
 interface AppContextValue extends AppState {
   hydrated: boolean;
@@ -67,9 +87,10 @@ interface AppContextValue extends AppState {
   toasts: Toast[];
   toast: (message: string) => void;
   dismissToast: (id: string) => void;
-  signup: (input: SignupInput) => void;
-  login: (email: string) => void;
-  logout: () => void;
+  authMode: "supabase" | "local";
+  signup: (input: SignupInput) => Promise<AuthResult>;
+  login: (email: string, password: string) => Promise<AuthResult>;
+  logout: () => Promise<void>;
   completeOnboarding: (data: Partial<Company>) => void;
   submitBrief: (brief: Brief) => string;
   requestRevision: (projectId: string, what: string, priority: string) => void;
@@ -106,25 +127,50 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  // Hydrate persisted state on mount
+  // Hydrate persisted state on mount + sync auth
   useEffect(() => {
+    // Restore non-auth app data from localStorage (always).
+    let parsed: Partial<AppState> | null = null;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as Partial<AppState>;
-        setState((s) => ({
-          ...s,
-          user: parsed.user ?? null,
-          company: parsed.company ?? null,
-          projects: parsed.projects ?? s.projects,
-          messages: parsed.messages ?? s.messages,
-          files: parsed.files ?? s.files,
-          invoices: parsed.invoices ?? s.invoices,
-        }));
-      }
+      if (raw) parsed = JSON.parse(raw) as Partial<AppState>;
     } catch {
       /* ignore */
     }
+    setState((s) => ({
+      ...s,
+      company: parsed?.company ?? null,
+      projects: parsed?.projects ?? s.projects,
+      messages: parsed?.messages ?? s.messages,
+      files: parsed?.files ?? s.files,
+      invoices: parsed?.invoices ?? s.invoices,
+    }));
+
+    if (isSupabaseConfigured) {
+      // Supabase is the source of truth for the user/session.
+      const supabase = getSupabaseBrowser();
+      if (!supabase) {
+        setHydrated(true);
+        return;
+      }
+      supabase.auth.getSession().then(({ data }) => {
+        setState((s) => ({
+          ...s,
+          user: data.session ? mapSupabaseUser(data.session.user) : null,
+        }));
+        setHydrated(true);
+      });
+      const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+        setState((s) => ({
+          ...s,
+          user: session ? mapSupabaseUser(session.user) : null,
+        }));
+      });
+      return () => sub.subscription.unsubscribe();
+    }
+
+    // Local placeholder auth: restore user from localStorage.
+    setState((s) => ({ ...s, user: parsed?.user ?? null }));
     setHydrated(true);
   }, []);
 
@@ -150,37 +196,85 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setToasts((prev) => prev.filter((x) => x.id !== tid));
   }, []);
 
-  const signup = useCallback((input: SignupInput) => {
-    const user: User = {
-      id: id("usr"),
-      fullName: input.fullName,
-      email: input.email,
-      phone: input.phone,
-      role: "buyer",
-      createdAt: new Date().toISOString(),
-    };
-    const company: Company = {
-      id: id("co"),
-      userId: user.id,
-      name: input.companyName,
-      website: input.website,
-      tools: [],
-      goals: [],
-      createdAt: new Date().toISOString(),
-    };
-    setState((s) => ({ ...s, user, company }));
-  }, []);
+  const signup = useCallback(
+    async (input: SignupInput): Promise<AuthResult> => {
+      const company: Company = {
+        id: id("co"),
+        userId: "pending",
+        name: input.companyName,
+        website: input.website,
+        tools: [],
+        goals: [],
+        createdAt: new Date().toISOString(),
+      };
 
-  const login = useCallback((email: string) => {
-    // Placeholder auth: log in as the demo buyer (swap for real auth later).
-    setState((s) => ({
-      ...s,
-      user: { ...mockUser, email: email || mockUser.email },
-      company: s.company ?? mockCompany,
-    }));
-  }, []);
+      if (isSupabaseConfigured) {
+        const supabase = getSupabaseBrowser();
+        if (!supabase) return { error: "Auth is not available." };
+        const { data, error } = await supabase.auth.signUp({
+          email: input.email,
+          password: input.password,
+          options: {
+            data: {
+              full_name: input.fullName,
+              phone: input.phone ?? "",
+              company_name: input.companyName,
+              website: input.website ?? "",
+            },
+          },
+        });
+        if (error) return { error: error.message };
+        setState((s) => ({
+          ...s,
+          company,
+          user: data.user ? mapSupabaseUser(data.user) : s.user,
+        }));
+        return {};
+      }
 
-  const logout = useCallback(() => {
+      // Local placeholder auth.
+      const user: User = {
+        id: id("usr"),
+        fullName: input.fullName,
+        email: input.email,
+        phone: input.phone,
+        role: "buyer",
+        createdAt: new Date().toISOString(),
+      };
+      setState((s) => ({ ...s, user, company: { ...company, userId: user.id } }));
+      return {};
+    },
+    []
+  );
+
+  const login = useCallback(
+    async (email: string, password: string): Promise<AuthResult> => {
+      if (isSupabaseConfigured) {
+        const supabase = getSupabaseBrowser();
+        if (!supabase) return { error: "Auth is not available." };
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) return { error: error.message };
+        // user is set by the onAuthStateChange listener
+        return {};
+      }
+      // Local placeholder auth.
+      setState((s) => ({
+        ...s,
+        user: { ...mockUser, email: email || mockUser.email },
+        company: s.company ?? mockCompany,
+      }));
+      return {};
+    },
+    []
+  );
+
+  const logout = useCallback(async () => {
+    if (isSupabaseConfigured) {
+      await getSupabaseBrowser()?.auth.signOut();
+    }
     setState((s) => ({ ...s, user: null }));
   }, []);
 
@@ -354,6 +448,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ...state,
       hydrated,
       isAuthed: !!state.user,
+      authMode: isSupabaseConfigured ? "supabase" : "local",
       toasts,
       toast,
       dismissToast,

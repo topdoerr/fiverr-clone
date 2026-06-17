@@ -24,6 +24,8 @@ export default function SignupPage() {
   });
   const [agree, setAgree] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [authError, setAuthError] = useState("");
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -39,16 +41,24 @@ export default function SignupPage() {
     return Object.keys(e).length === 0;
   };
 
-  const onSubmit = (ev: React.FormEvent) => {
+  const onSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+    setAuthError("");
     if (!validate()) return;
-    signup({
+    setSubmitting(true);
+    const { error } = await signup({
       fullName: form.fullName,
       email: form.email,
       phone: form.phone,
       companyName: form.company,
       website: form.website,
+      password: form.password,
     });
+    setSubmitting(false);
+    if (error) {
+      setAuthError(error);
+      return;
+    }
     router.push("/onboarding");
   };
 
@@ -111,9 +121,20 @@ export default function SignupPage() {
           </span>
         </label>
         {errors.agree && <p className="text-xs text-red-600">{errors.agree}</p>}
+        {authError && (
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+            {authError}
+          </p>
+        )}
 
-        <Button type="submit" variant="lime" size="lg" className="w-full">
-          Create Account
+        <Button
+          type="submit"
+          variant="lime"
+          size="lg"
+          className="w-full"
+          disabled={submitting}
+        >
+          {submitting ? "Creating account…" : "Create Account"}
         </Button>
 
         <p className="text-center text-sm text-forest/60">
