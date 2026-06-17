@@ -120,6 +120,15 @@ export const searchChips = [
   "AI strategy roadmap",
 ];
 
+export const trustedLogos = [
+  "Meta",
+  "Google",
+  "Netflix",
+  "P&G",
+  "PayPal",
+  "Payoneer",
+];
+
 /* ----------------------------------------------------------------------------
  * Popular outcomes
  * ------------------------------------------------------------------------- */
