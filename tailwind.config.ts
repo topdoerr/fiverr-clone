@@ -50,10 +50,12 @@ const config: Config = {
         // Buyer portal palette
         cream: "#F5F4EE",
         forest: "#1C1C14",
+        // Buyer-portal action accent (gold). Token name kept as `lime` to avoid
+        // churn across components; status "success" green is separate (see status.ts).
         lime: {
-          DEFAULT: "#C7F73E",
-          soft: "#D6FB6B",
-          dim: "#A6D62C",
+          DEFAULT: "#F4B740",
+          soft: "#FBCB63",
+          dim: "#D99A1F",
         },
         cobalt: {
           DEFAULT: "#0047AB",
