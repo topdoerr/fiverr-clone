@@ -17,6 +17,7 @@ import { DeliveryProcess } from "@/components/delivery-process";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { CTASection } from "@/components/cta-section";
 import { PackageTable } from "@/components/package-table";
+import { ServiceHeroArt } from "@/components/service-hero-art";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { verticals, getVertical } from "@/lib/data";
@@ -109,6 +110,7 @@ export default function ServiceDetailPage({
             <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-ink px-6 py-12 text-white sm:px-12 sm:py-14">
               <div className="bg-grid-dark absolute inset-0 opacity-50" />
               <div className="absolute -right-20 top-0 size-80 rounded-full bg-electric/10 blur-3xl" />
+              <ServiceHeroArt slug={v.slug} />
               <div className="relative max-w-3xl">
                 <div className="flex size-14 items-center justify-center rounded-2xl border border-white/15 bg-white/5">
                   <Icon className="size-7 text-electric" />
