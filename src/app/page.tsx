@@ -12,6 +12,7 @@ import { Hero } from "@/components/hero";
 import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { ServiceCard } from "@/components/service-card";
+import { OutcomeCard } from "@/components/outcome-card";
 import { ComparisonTable } from "@/components/comparison-table";
 import { DeliveryProcess } from "@/components/delivery-process";
 import { FaqAccordion } from "@/components/faq-accordion";
@@ -41,16 +42,15 @@ export default function HomePage() {
           title="What do you want AI to do?"
           description="Start from an outcome. We handle the scope, the build, and the review."
         />
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {popularOutcomes.map((outcome, i) => (
-            <Reveal key={outcome.label} delay={(i % 3) * 0.05}>
-              <Link
-                href={`/marketplace/${outcome.vertical}`}
-                className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4 text-sm font-medium transition-all hover:border-foreground/20 hover:bg-secondary/50"
-              >
-                {outcome.label}
-                <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
-              </Link>
+            <Reveal key={outcome.label} delay={(i % 4) * 0.05}>
+              <OutcomeCard
+                label={outcome.label}
+                vertical={outcome.vertical}
+                icon={outcome.icon}
+                index={i}
+              />
             </Reveal>
           ))}
         </div>
