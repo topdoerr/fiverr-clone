@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { AppProviders } from "@/components/dashboard/app-providers";
+import { SiteChrome } from "@/components/site-chrome";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -67,9 +67,9 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background font-sans">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <AppProviders>
+          <SiteChrome>{children}</SiteChrome>
+        </AppProviders>
         <ServiceWorkerRegister />
       </body>
     </html>

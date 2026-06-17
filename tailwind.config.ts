@@ -47,6 +47,18 @@ const config: Config = {
           soft: "#4F7BEA",
           dim: "#0047AB",
         },
+        // Buyer portal palette
+        cream: "#F5F4EE",
+        forest: "#1C1C14",
+        lime: {
+          DEFAULT: "#C7F73E",
+          soft: "#D6FB6B",
+          dim: "#A6D62C",
+        },
+        cobalt: {
+          DEFAULT: "#0047AB",
+          soft: "#2D5BD8",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

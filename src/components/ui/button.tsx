@@ -19,6 +19,8 @@ const buttonVariants = cva(
         link: "text-foreground underline-offset-4 hover:underline",
         invert:
           "bg-white text-ink hover:bg-white/90 shadow-sm",
+        lime: "bg-lime text-forest font-semibold hover:bg-lime-soft shadow-[0_8px_30px_-12px_rgba(199,247,62,0.6)]",
+        forest: "bg-forest text-cream hover:bg-forest/90 shadow-sm",
       },
       size: {
         default: "h-10 px-5 py-2",
