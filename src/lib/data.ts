@@ -143,16 +143,16 @@ export const trustedLogos = [
  * ------------------------------------------------------------------------- */
 
 export const popularOutcomes = [
-  { label: "Answer my business calls", vertical: "ai-voice-agents", icon: PhoneCall },
+  { label: "Answer business calls", vertical: "ai-voice-agents", icon: PhoneCall },
   { label: "Automate my CRM", vertical: "ai-automation", icon: Workflow },
   { label: "Build an AI chatbot", vertical: "ai-chatbots", icon: MessageSquare },
   { label: "Create AI ads", vertical: "ai-marketing-growth", icon: Megaphone },
-  { label: "Launch an AI landing page", vertical: "ai-websites-apps", icon: LayoutTemplate },
-  { label: "Turn spreadsheets into dashboards", vertical: "data-intelligence", icon: BarChart3 },
-  { label: "Train an internal assistant", vertical: "ai-chatbots", icon: Brain },
+  { label: "AI landing page", vertical: "ai-websites-apps", icon: LayoutTemplate },
+  { label: "Spreadsheet dashboards", vertical: "data-intelligence", icon: BarChart3 },
+  { label: "Internal assistant", vertical: "ai-chatbots", icon: Brain },
   { label: "Build an AI MVP", vertical: "ai-websites-apps", icon: Rocket },
   { label: "Create a voice agent", vertical: "ai-voice-agents", icon: Mic },
-  { label: "Write and launch campaigns", vertical: "ai-marketing-growth", icon: Mail },
+  { label: "Launch campaigns", vertical: "ai-marketing-growth", icon: Mail },
   { label: "Clean up operations", vertical: "ai-business-operations", icon: Settings2 },
   { label: "Build an AI roadmap", vertical: "ai-strategy-consulting", icon: Map },
 ];

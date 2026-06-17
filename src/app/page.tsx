@@ -36,25 +36,26 @@ export default function HomePage() {
       <Hero />
 
       {/* Popular AI outcomes */}
-      <Section>
-        <SectionHeading
-          eyebrow="Popular AI outcomes"
-          title="What do you want AI to do?"
-          description="Start from an outcome. We handle the scope, the build, and the review."
-        />
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {popularOutcomes.map((outcome, i) => (
-            <Reveal key={outcome.label} delay={(i % 4) * 0.05}>
-              <OutcomeCard
-                label={outcome.label}
-                vertical={outcome.vertical}
-                icon={outcome.icon}
-                index={i}
-              />
-            </Reveal>
-          ))}
+      <section className="py-20 sm:py-28">
+        <div className="mx-auto w-full max-w-7xl px-6">
+          <SectionHeading
+            eyebrow="Popular AI outcomes"
+            title="What do you want AI to do?"
+            description="Start from an outcome. We handle the scope, the build, and the review."
+          />
+          <div className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12">
+            {popularOutcomes.map((outcome) => (
+              <Reveal key={outcome.label}>
+                <OutcomeCard
+                  label={outcome.label}
+                  vertical={outcome.vertical}
+                  icon={outcome.icon}
+                />
+              </Reveal>
+            ))}
+          </div>
         </div>
-      </Section>
+      </section>
 
       {/* Service verticals grid */}
       <Section className="bg-secondary/30 py-20 sm:py-28">
