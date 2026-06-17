@@ -9,6 +9,31 @@ import { searchChips, trustPoints } from "@/lib/data";
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
+      {/*
+        Hero background video — muted/autoplay/loop for a calm b-roll of the
+        internal AI team at work. Drop the exported files into /public/hero/:
+          - hero.mp4  (and optional hero.webm)  16:9, 8-12s, seamless loop
+          - hero-poster.jpg                     first frame, shown before/while loading
+        If the files are absent the layout still looks correct (ink + grid + glow).
+      */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/hero/hero-poster.jpg"
+        aria-hidden="true"
+      >
+        <source src="/hero/hero.webm" type="video/webm" />
+        <source src="/hero/hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* Legibility overlays: keep the white headline + cobalt CTA readable */}
+      <div className="absolute inset-0 bg-ink/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/40 to-ink" />
+
       <div className="bg-grid-dark absolute inset-0 opacity-70" />
       <div className="absolute -top-40 left-1/2 h-[30rem] w-[60rem] -translate-x-1/2 rounded-full bg-electric/10 blur-[120px]" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
