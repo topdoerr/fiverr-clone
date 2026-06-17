@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,9 +37,23 @@ export const metadata: Metadata = {
       "A managed AI delivery system. Marketplace simplicity. Managed delivery.",
     type: "website",
   },
+  applicationName: "TopDoerr",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "TopDoerr",
+  },
   icons: {
     icon: "/brand/td_favicon_forest.svg",
+    apple: "/icons/apple-touch-icon.png",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0B",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -55,6 +70,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

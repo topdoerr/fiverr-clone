@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { InstallButton } from "@/components/install-button";
 import { footerNav } from "@/lib/data";
 
 export function Footer() {
@@ -19,12 +20,15 @@ export function Footer() {
               Buy AI outcomes. Delivered by TopDoerr. Internal talent, AI speed,
               human review.
             </p>
-            <Button asChild variant="electric" size="sm">
-              <Link href="/start">
-                Start a Project
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button asChild variant="electric" size="sm">
+                <Link href="/start">
+                  Start a Project
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+              <InstallButton />
+            </div>
           </div>
 
           {footerNav.map((col) => (
