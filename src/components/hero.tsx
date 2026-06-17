@@ -111,7 +111,7 @@ export function Hero() {
         <div className="container-tight flex items-center justify-between gap-4 py-7">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <span className="text-xs font-medium uppercase tracking-widest text-white/45">
-              Trusted by
+              In partnership with
             </span>
             {trustedLogos.map((logo) => (
               <span

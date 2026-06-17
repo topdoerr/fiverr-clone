@@ -130,12 +130,11 @@ export const searchChips = [
 ];
 
 export const trustedLogos = [
-  "Meta",
-  "Google",
-  "Netflix",
-  "P&G",
-  "PayPal",
-  "Payoneer",
+  "Base44",
+  "ServiceNow",
+  "Datadog",
+  "HubSpot",
+  "Claude",
 ];
 
 /* ----------------------------------------------------------------------------
