@@ -35,7 +35,7 @@ export function Hero() {
 
   return (
     <div className="bg-background px-2 pt-2 sm:px-3 sm:pt-3 lg:px-4 lg:pt-4">
-      <section className="relative flex min-h-[86vh] w-full items-center overflow-hidden rounded-[1.75rem] bg-ink text-white sm:rounded-[2.5rem]">
+      <section className="relative flex min-h-[68vh] w-full items-center overflow-hidden rounded-[1.75rem] bg-ink text-white sm:rounded-[2.5rem]">
       {/* Background video */}
       <video
         ref={videoRef}
@@ -56,7 +56,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/40" />
 
       {/* Main content */}
-      <div className="container-tight relative w-full py-28">
+      <div className="container-tight relative w-full py-20">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
