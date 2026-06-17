@@ -70,7 +70,20 @@ export function AuthModal({
         </button>
 
         {/* Brand panel */}
-        <div className="relative hidden flex-col justify-center overflow-hidden bg-gradient-to-br from-cobalt to-[#06173F] p-9 text-white md:flex">
+        <div className="relative hidden flex-col justify-center overflow-hidden bg-cobalt p-9 text-white md:flex">
+          {/* Hero video background */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            <source src="/hero/hero.mp4" type="video/mp4" />
+          </video>
+          {/* Cobalt overlay for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-br from-cobalt/90 via-cobalt/75 to-[#06173F]/90" />
           <div
             className="absolute inset-0 opacity-[0.08]"
             style={{
