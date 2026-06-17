@@ -34,7 +34,8 @@ export function Hero() {
   };
 
   return (
-    <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden bg-ink text-white">
+    <div className="bg-background px-2 pt-2 sm:px-3 sm:pt-3 lg:px-4 lg:pt-4">
+      <section className="relative flex min-h-[86vh] w-full items-center overflow-hidden rounded-[1.75rem] bg-ink text-white sm:rounded-[2.5rem]">
       {/* Background video */}
       <video
         ref={videoRef}
@@ -131,6 +132,7 @@ export function Hero() {
           </button>
         </div>
       </div>
-    </section>
+      </section>
+    </div>
   );
 }
