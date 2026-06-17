@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
         electric:
-          "bg-electric text-ink font-semibold hover:bg-electric-soft shadow-[0_8px_30px_-12px_rgba(199,247,62,0.6)]",
+          "bg-electric text-white font-semibold hover:bg-electric-soft shadow-[0_8px_30px_-12px_rgba(45,91,216,0.65)]",
         outline:
           "border border-border bg-transparent hover:bg-secondary text-foreground",
         ghost: "hover:bg-secondary text-foreground",

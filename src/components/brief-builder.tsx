@@ -91,7 +91,7 @@ function OptionGrid({
               className={cn(
                 "flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors",
                 selected
-                  ? "border-electric bg-electric text-ink"
+                  ? "border-electric bg-electric text-white"
                   : "border-border text-transparent group-hover:border-foreground/30"
               )}
             >
@@ -174,7 +174,7 @@ export function BriefBuilder() {
     return (
       <div className="rounded-3xl border border-border bg-card p-8 sm:p-12">
         <div className="mx-auto max-w-xl text-center">
-          <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-electric text-ink">
+          <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-electric text-white">
             <CheckCircle2 className="size-8" strokeWidth={2.5} />
           </div>
           <h2 className="mt-6 font-display text-2xl font-semibold tracking-tight text-balance sm:text-3xl">

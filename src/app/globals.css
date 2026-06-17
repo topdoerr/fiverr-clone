@@ -19,8 +19,8 @@
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 42%;
 
-    --accent: 76 92% 60%;
-    --accent-foreground: 240 6% 8%;
+    --accent: 224 69% 51%;
+    --accent-foreground: 0 0% 100%;
 
     --border: 240 6% 90%;
     --input: 240 6% 90%;
@@ -43,8 +43,8 @@
   }
 
   ::selection {
-    background: #c7f73e;
-    color: #0a0a0b;
+    background: #2d5bd8;
+    color: #ffffff;
   }
 }
 
@@ -78,8 +78,8 @@
   }
 
   .glow-electric {
-    box-shadow: 0 0 0 1px rgba(199, 247, 62, 0.25),
-      0 8px 40px -12px rgba(199, 247, 62, 0.45);
+    box-shadow: 0 0 0 1px rgba(45, 91, 216, 0.3),
+      0 8px 40px -12px rgba(45, 91, 216, 0.55);
   }
 }
 

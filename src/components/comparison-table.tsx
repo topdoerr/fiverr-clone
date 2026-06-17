@@ -38,7 +38,7 @@ export function ComparisonTable() {
                 key={row.topdoerr}
                 className="flex items-center gap-3 text-sm text-white/90"
               >
-                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-ink">
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-white">
                   <Check className="size-3" strokeWidth={3} />
                 </span>
                 {row.topdoerr}

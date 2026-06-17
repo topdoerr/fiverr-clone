@@ -16,7 +16,7 @@ function sortPackages(packages: Package[]): Package[] {
 
 function BoolCell({ value }: { value: boolean }) {
   return value ? (
-    <span className="inline-flex size-5 items-center justify-center rounded-full bg-electric text-ink">
+    <span className="inline-flex size-5 items-center justify-center rounded-full bg-electric text-white">
       <Check className="size-3" strokeWidth={3} />
     </span>
   ) : (

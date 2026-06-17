@@ -43,9 +43,9 @@ const config: Config = {
         ink: "#0A0A0B",
         charcoal: "#161618",
         electric: {
-          DEFAULT: "#C7F73E",
-          soft: "#D6FB6B",
-          dim: "#A6D62C",
+          DEFAULT: "#2D5BD8",
+          soft: "#4F7BEA",
+          dim: "#0047AB",
         },
       },
       borderRadius: {

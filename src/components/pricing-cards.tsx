@@ -46,7 +46,7 @@ export function PricingCards() {
             <ul className="mt-7 space-y-3">
               {path.includes.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm">
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-ink">
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-white">
                     <Check className="size-3" strokeWidth={3} />
                   </span>
                   <span className="text-foreground/90">{item}</span>

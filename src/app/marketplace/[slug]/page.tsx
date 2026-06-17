@@ -171,7 +171,7 @@ export default function ServiceDetailPage({
             <Reveal key={service} delay={(i % 3) * 0.04}>
               <div className="flex items-start gap-3 rounded-xl border border-border bg-card px-5 py-4">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-electric/15">
-                  <Check className="size-3 text-ink" strokeWidth={3} />
+                  <Check className="size-3 text-electric" strokeWidth={3} />
                 </span>
                 <span className="text-sm font-medium leading-snug">
                   {service}

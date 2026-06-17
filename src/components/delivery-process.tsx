@@ -13,7 +13,7 @@ export function DeliveryProcess() {
               <li className="relative flex gap-5">
                 <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-card">
                   <Icon className="size-6 text-foreground" />
-                  <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-electric text-[10px] font-bold text-ink">
+                  <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-electric text-[10px] font-bold text-white">
                     {i + 1}
                   </span>
                 </div>
