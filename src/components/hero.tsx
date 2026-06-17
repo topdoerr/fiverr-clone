@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Search, ArrowRight, Pause, Play } from "lucide-react";
-import { searchChips, trustedLogos } from "@/lib/data";
+import { searchChips } from "@/lib/data";
+import { PartnerLogos } from "@/components/partner-logos";
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -109,18 +110,11 @@ export function Hero() {
       {/* Bottom strip: trusted-by + video control */}
       <div className="absolute inset-x-0 bottom-0">
         <div className="container-tight flex items-center justify-between gap-4 py-7">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <span className="text-xs font-medium uppercase tracking-widest text-white/45">
               In partnership with
             </span>
-            {trustedLogos.map((logo) => (
-              <span
-                key={logo}
-                className="font-display text-sm font-semibold text-white/55"
-              >
-                {logo}
-              </span>
-            ))}
+            <PartnerLogos />
           </div>
 
           <button
