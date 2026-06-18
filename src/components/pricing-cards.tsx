@@ -5,8 +5,10 @@ import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { getT } from "@/lib/i18n/server";
 
-export function PricingCards() {
+export async function PricingCards() {
+  const t = await getT();
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-stretch">
       {pricingPaths.map((path, i) => (
@@ -21,24 +23,24 @@ export function PricingCards() {
           >
             {path.highlight && (
               <Badge variant="electric" className="absolute right-6 top-6">
-                Most popular
+                {t("Most popular")}
               </Badge>
             )}
 
             <h3 className="font-display text-lg font-semibold tracking-tight">
-              {path.name}
+              {t(path.name)}
             </h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              {path.tagline}
+              {t(path.tagline)}
             </p>
 
             <div className="mt-6 flex items-baseline gap-2">
               <span className="font-display text-3xl font-semibold tracking-tight">
-                {path.price}
+                {t(path.price)}
               </span>
               {path.priceSuffix && (
                 <span className="text-sm text-muted-foreground">
-                  {path.priceSuffix}
+                  {t(path.priceSuffix)}
                 </span>
               )}
             </div>
@@ -49,7 +51,7 @@ export function PricingCards() {
                   <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-white">
                     <Check className="size-3" strokeWidth={3} />
                   </span>
-                  <span className="text-foreground/90">{item}</span>
+                  <span className="text-foreground/90">{t(item)}</span>
                 </li>
               ))}
             </ul>
@@ -59,7 +61,7 @@ export function PricingCards() {
               variant={path.highlight ? "electric" : "outline"}
               className="mt-8 w-full"
             >
-              <Link href={path.href}>{path.cta}</Link>
+              <Link href={path.href}>{t(path.cta)}</Link>
             </Button>
           </div>
         </Reveal>

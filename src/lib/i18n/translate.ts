@@ -1,10 +1,23 @@
 import type { Locale } from "./config";
 import { es } from "./es";
+import { home } from "./dict/home";
+import { marketplace } from "./dict/marketplace";
+import { pages } from "./dict/pages";
+import { dashboard } from "./dict/dashboard";
+
+// Merge the base dictionary with per-area modules (later spreads win on overlap).
+const dict: Record<string, string> = {
+  ...es,
+  ...home,
+  ...marketplace,
+  ...pages,
+  ...dashboard,
+};
 
 /** Translate an English source string for the given locale. Falls back to the
  *  original string when no translation exists (so nothing ever goes blank). */
 export function translate(locale: Locale, key: string): string {
-  if (locale === "es") return es[key] ?? key;
+  if (locale === "es") return dict[key] ?? key;
   return key;
 }
 

@@ -4,6 +4,7 @@ import { CreditCard, Wallet, FileText } from "lucide-react";
 import { MetricCard, EmptyState } from "@/components/dashboard/primitives";
 import { InvoiceCard } from "@/components/dashboard/project-bits";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 function formatUsd(amount: number) {
   return `$${amount.toLocaleString("en-US")}`;
@@ -11,6 +12,7 @@ function formatUsd(amount: number) {
 
 export default function BillingPage() {
   const { invoices, projects } = useApp();
+  const t = useT();
 
   const totalPaid = invoices
     .filter((i) => i.status === "paid")
@@ -23,10 +25,10 @@ export default function BillingPage() {
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
         <h1 className="font-display text-2xl font-semibold tracking-tight text-forest">
-          Billing
+          {t("Billing")}
         </h1>
         <p className="mt-2 text-sm text-forest/60">
-          Invoices, payments, and package history.
+          {t("Invoices, payments, and package history.")}
         </p>
       </div>
 
@@ -42,7 +44,7 @@ export default function BillingPage() {
 
       <section>
         <h2 className="mb-4 font-display text-lg font-semibold text-forest">
-          Invoices
+          {t("Invoices")}
         </h2>
         {invoices.length === 0 ? (
           <EmptyState

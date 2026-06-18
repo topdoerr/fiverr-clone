@@ -6,6 +6,7 @@ import { PricingCards } from "@/components/pricing-cards";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { CTASection } from "@/components/cta-section";
 import { globalFaq } from "@/lib/data";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -43,7 +44,8 @@ const pricingFaq = globalFaq.filter((item) =>
   ].includes(item.q)
 );
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const t = await getT();
   return (
     <>
       {/* Header */}
@@ -52,18 +54,19 @@ export default function PricingPage() {
           <Reveal>
             <span className="eyebrow">
               <span className="size-1.5 rounded-full bg-electric" />
-              Pricing
+              {t("Pricing")}
             </span>
           </Reveal>
           <Reveal delay={0.05}>
             <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-              Marketplace simplicity. Managed delivery.
+              {t("Marketplace simplicity. Managed delivery.")}
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground text-balance">
-              Three ways to work with TopDoerr. Transparent scopes, clear
-              deliverables.
+              {t(
+                "Three ways to work with TopDoerr. Transparent scopes, clear deliverables."
+              )}
             </p>
           </Reveal>
         </div>
@@ -78,9 +81,11 @@ export default function PricingPage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="What's included"
-          title="One-time, recurring, or custom — same delivery standard."
-          description="Marketplace Projects are billed per scoped project. Monthly AI Ops is a recurring engagement with a continuous queue. Enterprise AI Partner is custom-scoped. Whatever the path, every plan ships under the same managed standard."
+          eyebrow={t("What's included")}
+          title={t("One-time, recurring, or custom — same delivery standard.")}
+          description={t(
+            "Marketplace Projects are billed per scoped project. Monthly AI Ops is a recurring engagement with a continuous queue. Enterprise AI Partner is custom-scoped. Whatever the path, every plan ships under the same managed standard."
+          )}
           className="mb-12"
         />
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,10 +98,10 @@ export default function PricingPage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {item.title}
+                    {t(item.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
+                    {t(item.description)}
                   </p>
                 </div>
               </Reveal>
@@ -109,9 +114,11 @@ export default function PricingPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <SectionHeading
-            eyebrow="FAQ"
-            title="Pricing questions, answered."
-            description="Still curious about scope or billing? Reach out and TopDoerr will scope it with you."
+            eyebrow={t("FAQ")}
+            title={t("Pricing questions, answered.")}
+            description={t(
+              "Still curious about scope or billing? Reach out and TopDoerr will scope it with you."
+            )}
           />
           <div>
             <FaqAccordion items={pricingFaq} />

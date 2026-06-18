@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { type LucideIcon } from "lucide-react";
+import { getT } from "@/lib/i18n/server";
 
-export function OutcomeCard({
+export async function OutcomeCard({
   label,
   vertical,
   icon: Icon,
@@ -10,6 +11,7 @@ export function OutcomeCard({
   vertical: string;
   icon: LucideIcon;
 }) {
+  const t = await getT();
   return (
     <Link
       href={`/marketplace/${vertical}`}
@@ -22,7 +24,7 @@ export function OutcomeCard({
         <Icon className="size-6" strokeWidth={1.75} />
       </span>
       <span className="relative text-sm font-medium leading-snug text-foreground">
-        {label}
+        {t(label)}
       </span>
     </Link>
   );

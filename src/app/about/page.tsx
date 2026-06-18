@@ -13,6 +13,7 @@ import { Reveal } from "@/components/reveal";
 import { CTASection } from "@/components/cta-section";
 import { Badge } from "@/components/ui/badge";
 import { keyPhrases } from "@/lib/data";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "About",
@@ -74,7 +75,8 @@ const team = [
   { initials: "AI", role: "AI / Agents" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const t = await getT();
   return (
     <>
       {/* Hero */}
@@ -86,28 +88,26 @@ export default function AboutPage() {
             <Reveal>
               <span className="eyebrow text-white/50">
                 <span className="size-1.5 rounded-full bg-electric" />
-                About TopDoerr
+                {t("About TopDoerr")}
               </span>
             </Reveal>
             <Reveal delay={0.05}>
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-                Hire the result, not the freelancer.
+                {t("Hire the result, not the freelancer.")}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-5 text-lg leading-relaxed text-white/60 text-balance">
-                TopDoerr is a managed AI outcomes platform — marketplace
-                simplicity with internal talent, AI speed, and human review. You
-                buy an outcome; we scope it, build it, review it, and deliver it
-                under one standard. Spanish-first and built for Puerto Rico,
-                LATAM, and growth companies.
+                {t(
+                  "TopDoerr is a managed AI outcomes platform — marketplace simplicity with internal talent, AI speed, and human review. You buy an outcome; we scope it, build it, review it, and deliver it under one standard. Spanish-first and built for Puerto Rico, LATAM, and growth companies."
+                )}
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-wrap gap-2">
-                <Badge variant="dark">Internal talent. AI speed.</Badge>
-                <Badge variant="dark">Human review.</Badge>
-                <Badge variant="dark">Spanish-first.</Badge>
+                <Badge variant="dark">{t("Internal talent. AI speed.")}</Badge>
+                <Badge variant="dark">{t("Human review.")}</Badge>
+                <Badge variant="dark">{t("Spanish-first.")}</Badge>
               </div>
             </Reveal>
           </div>
@@ -117,9 +117,11 @@ export default function AboutPage() {
       {/* Values */}
       <Section>
         <SectionHeading
-          eyebrow="What makes us different"
-          title="A marketplace experience. A managed delivery standard."
-          description="The speed of an AI marketplace with the accountability of an internal delivery team."
+          eyebrow={t("What makes us different")}
+          title={t("A marketplace experience. A managed delivery standard.")}
+          description={t(
+            "The speed of an AI marketplace with the accountability of an internal delivery team."
+          )}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {values.map((value, i) => {
@@ -131,10 +133,10 @@ export default function AboutPage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {value.title}
+                    {t(value.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {value.description}
+                    {t(value.description)}
                   </p>
                 </div>
               </Reveal>
@@ -147,8 +149,8 @@ export default function AboutPage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="What we believe"
-          title="The principles behind every delivery."
+          eyebrow={t("What we believe")}
+          title={t("The principles behind every delivery.")}
           className="mb-12"
         />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -159,7 +161,7 @@ export default function AboutPage() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="mt-6 font-display text-xl font-semibold leading-snug tracking-tight text-balance">
-                  {phrase}
+                  {t(phrase)}
                 </p>
               </div>
             </Reveal>
@@ -170,9 +172,11 @@ export default function AboutPage() {
       {/* Built for */}
       <Section>
         <SectionHeading
-          eyebrow="Built for"
-          title="Where TopDoerr delivers."
-          description="From the Caribbean to growth companies scaling AI across departments."
+          eyebrow={t("Built for")}
+          title={t("Where TopDoerr delivers.")}
+          description={t(
+            "From the Caribbean to growth companies scaling AI across departments."
+          )}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-3">
           {builtFor.map((item, i) => {
@@ -184,10 +188,10 @@ export default function AboutPage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {item.title}
+                    {t(item.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
+                    {t(item.description)}
                   </p>
                 </div>
               </Reveal>
@@ -199,7 +203,7 @@ export default function AboutPage() {
         <div className="mt-16">
           <Reveal>
             <p className="text-sm font-medium text-muted-foreground">
-              One accountable team across every discipline.
+              {t("One accountable team across every discipline.")}
             </p>
           </Reveal>
           <div className="mt-6 flex flex-wrap gap-4">
@@ -209,7 +213,7 @@ export default function AboutPage() {
                   <span className="flex size-10 items-center justify-center rounded-full bg-ink text-sm font-semibold text-electric">
                     {member.initials}
                   </span>
-                  <span className="text-sm font-medium">{member.role}</span>
+                  <span className="text-sm font-medium">{t(member.role)}</span>
                 </div>
               </Reveal>
             ))}

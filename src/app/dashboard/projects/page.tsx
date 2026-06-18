@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/dashboard/primitives";
 import { ProjectCard } from "@/components/dashboard/project-card";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 import type { ProjectStatus } from "@/lib/dashboard/types";
 
@@ -22,6 +23,7 @@ const inactiveStatuses = new Set<ProjectStatus>([
 
 export default function ProjectsPage() {
   const { projects } = useApp();
+  const t = useT();
   const [filter, setFilter] = useState<Filter>("All");
 
   const filtered = projects.filter((p) => {
@@ -42,14 +44,14 @@ export default function ProjectsPage() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <h1 className="font-display text-2xl font-semibold tracking-tight text-forest">
-            Projects
+            {t("Projects")}
           </h1>
           <p className="mt-2 text-sm text-forest/60">
-            Every project TopDoerr is delivering for you.
+            {t("Every project TopDoerr is delivering for you.")}
           </p>
         </div>
         <Button variant="lime" asChild>
-          <Link href="/dashboard/briefs/new">Start Project</Link>
+          <Link href="/dashboard/briefs/new">{t("Start Project")}</Link>
         </Button>
       </div>
 
@@ -66,7 +68,7 @@ export default function ProjectsPage() {
                 : "border-forest/15 text-forest/60 hover:border-forest/30"
             )}
           >
-            {f}
+            {t(f)}
           </button>
         ))}
       </div>

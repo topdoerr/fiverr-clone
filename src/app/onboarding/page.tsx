@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useApp } from "@/lib/dashboard/store";
 import { onboardingOptions } from "@/lib/dashboard/mock-data";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 const TOTAL = 6;
@@ -17,6 +18,7 @@ const TOTAL = 6;
 export default function OnboardingPage() {
   const { user, hydrated, completeOnboarding, company } = useApp();
   const router = useRouter();
+  const t = useT();
   const [step, setStep] = useState(1);
 
   const [profile, setProfile] = useState({
@@ -45,15 +47,15 @@ export default function OnboardingPage() {
 
   const recommendation = useMemo(() => {
     if (goals.includes("Answer calls"))
-      return "an AI Voice Agent Pilot to start answering and booking calls automatically";
+      return t("an AI Voice Agent Pilot to start answering and booking calls automatically");
     if (goals.includes("Automate workflows") || goals.includes("Improve sales"))
-      return "an AI Automation Sprint to remove your most manual, repetitive work";
+      return t("an AI Automation Sprint to remove your most manual, repetitive work");
     if (goals.includes("Build dashboards"))
-      return "an AI Dashboard Starter to turn your data into live, decision-ready views";
+      return t("an AI Dashboard Starter to turn your data into live, decision-ready views");
     if (goals.includes("Build a chatbot") || goals.includes("Improve customer support"))
-      return "an AI Chatbot Starter trained on your business and embedded on your site";
-    return "an AI Strategy Roadmap to map the highest-impact place to start";
-  }, [goals]);
+      return t("an AI Chatbot Starter trained on your business and embedded on your site");
+    return t("an AI Strategy Roadmap to map the highest-impact place to start");
+  }, [goals, t]);
 
   const finish = () => {
     completeOnboarding({
@@ -103,7 +105,7 @@ export default function OnboardingPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/td_primary_forest.svg" alt="TopDoerr" className="h-7 w-auto" />
           <span className="text-sm text-forest/50">
-            Step {Math.min(step, TOTAL)} of {TOTAL}
+            {t("Step")} {Math.min(step, TOTAL)} {t("of")} {TOTAL}
           </span>
         </div>
         <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-forest/10">
@@ -128,11 +130,10 @@ export default function OnboardingPage() {
                     <Sparkles className="size-6 text-forest" />
                   </div>
                   <h1 className="mt-5 font-display text-2xl font-semibold text-forest sm:text-3xl">
-                    Welcome to TopDoerr.
+                    {t("Welcome to TopDoerr.")}
                   </h1>
                   <p className="mx-auto mt-3 max-w-md text-forest/60">
-                    Let&apos;s understand your business so we can recommend the
-                    right AI services and delivery path.
+                    {t("Let's understand your business so we can recommend the right AI services and delivery path.")}
                   </p>
                 </div>
               )}
@@ -140,19 +141,19 @@ export default function OnboardingPage() {
               {step === 2 && (
                 <div>
                   <h2 className="font-display text-xl font-semibold text-forest">
-                    Company profile
+                    {t("Company profile")}
                   </h2>
                   <div className="mt-6 space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
-                        <Label>Company name</Label>
+                        <Label>{t("Company name")}</Label>
                         <Input
                           value={profile.name}
                           onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <Label>Website</Label>
+                        <Label>{t("Website")}</Label>
                         <Input
                           value={profile.website}
                           onChange={(e) => setProfile({ ...profile, website: e.target.value })}
@@ -161,7 +162,7 @@ export default function OnboardingPage() {
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <Label>Industry</Label>
+                      <Label>{t("Industry")}</Label>
                       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                         {onboardingOptions.industries.map((o) => (
                           <Pill
@@ -169,14 +170,14 @@ export default function OnboardingPage() {
                             active={profile.industry === o}
                             onClick={() => setProfile({ ...profile, industry: o })}
                           >
-                            {o}
+                            {t(o)}
                           </Pill>
                         ))}
                       </div>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
-                        <Label>Company size</Label>
+                        <Label>{t("Company size")}</Label>
                         <div className="flex flex-wrap gap-2">
                           {onboardingOptions.companySizes.map((o) => (
                             <Pill
@@ -184,13 +185,13 @@ export default function OnboardingPage() {
                               active={profile.size === o}
                               onClick={() => setProfile({ ...profile, size: o })}
                             >
-                              {o}
+                              {t(o)}
                             </Pill>
                           ))}
                         </div>
                       </div>
                       <div className="space-y-1.5">
-                        <Label>Location</Label>
+                        <Label>{t("Location")}</Label>
                         <Input
                           value={profile.location}
                           onChange={(e) => setProfile({ ...profile, location: e.target.value })}
@@ -205,9 +206,9 @@ export default function OnboardingPage() {
               {step === 3 && (
                 <div>
                   <h2 className="font-display text-xl font-semibold text-forest">
-                    What do you want AI to help with?
+                    {t("What do you want AI to help with?")}
                   </h2>
-                  <p className="mt-1 text-sm text-forest/55">Select all that apply.</p>
+                  <p className="mt-1 text-sm text-forest/55">{t("Select all that apply.")}</p>
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {onboardingOptions.goals.map((o) => (
                       <Pill
@@ -215,7 +216,7 @@ export default function OnboardingPage() {
                         active={goals.includes(o)}
                         onClick={() => toggle(goals, setGoals, o)}
                       >
-                        {o}
+                        {t(o)}
                       </Pill>
                     ))}
                   </div>
@@ -225,10 +226,10 @@ export default function OnboardingPage() {
               {step === 4 && (
                 <div>
                   <h2 className="font-display text-xl font-semibold text-forest">
-                    Current tools
+                    {t("Current tools")}
                   </h2>
                   <p className="mt-1 text-sm text-forest/55">
-                    What does your team already use?
+                    {t("What does your team already use?")}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {onboardingOptions.tools.map((o) => (
@@ -237,7 +238,7 @@ export default function OnboardingPage() {
                         active={tools.includes(o)}
                         onClick={() => toggle(tools, setTools, o)}
                       >
-                        {o}
+                        {t(o)}
                       </Pill>
                     ))}
                   </div>
@@ -248,24 +249,24 @@ export default function OnboardingPage() {
                 <div className="space-y-6">
                   <div>
                     <h2 className="font-display text-xl font-semibold text-forest">
-                      Budget
+                      {t("Budget")}
                     </h2>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {onboardingOptions.budgets.map((o) => (
                         <Pill key={o} active={budget === o} onClick={() => setBudget(o)}>
-                          {o}
+                          {t(o)}
                         </Pill>
                       ))}
                     </div>
                   </div>
                   <div>
                     <h2 className="font-display text-xl font-semibold text-forest">
-                      Urgency
+                      {t("Urgency")}
                     </h2>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {onboardingOptions.urgency.map((o) => (
                         <Pill key={o} active={urgency === o} onClick={() => setUrgency(o)}>
-                          {o}
+                          {t(o)}
                         </Pill>
                       ))}
                     </div>
@@ -279,22 +280,22 @@ export default function OnboardingPage() {
                     <Check className="size-6" strokeWidth={3} />
                   </div>
                   <h2 className="mt-5 font-display text-2xl font-semibold text-forest">
-                    You&apos;re all set.
+                    {t("You're all set.")}
                   </h2>
                   <p className="mx-auto mt-3 max-w-md text-forest/60">
-                    Based on your answers, we recommend starting with{" "}
+                    {t("Based on your answers, we recommend starting with")}{" "}
                     <span className="font-medium text-forest">{recommendation}</span>.
                   </p>
                   <div className="mt-8 flex flex-col gap-3">
                     <Button asChild variant="lime" size="lg">
-                      <Link href="/dashboard/briefs/new">Start a Project Brief</Link>
+                      <Link href="/dashboard/briefs/new">{t("Start a Project Brief")}</Link>
                     </Button>
                     <div className="flex flex-col gap-3 sm:flex-row">
                       <Button asChild variant="outline" className="flex-1">
-                        <Link href="/marketplace">Explore AI Services</Link>
+                        <Link href="/marketplace">{t("Explore AI Services")}</Link>
                       </Button>
                       <Button asChild variant="forest" className="flex-1">
-                        <Link href="/dashboard">Go to Dashboard</Link>
+                        <Link href="/dashboard">{t("Go to Dashboard")}</Link>
                       </Button>
                     </div>
                   </div>
@@ -308,13 +309,13 @@ export default function OnboardingPage() {
               {step > 1 ? (
                 <Button variant="ghost" onClick={back}>
                   <ArrowLeft className="size-4" />
-                  Back
+                  {t("Back")}
                 </Button>
               ) : (
                 <span />
               )}
               <Button variant="lime" onClick={next}>
-                {step === 1 ? "Get Started" : step === TOTAL - 1 ? "See recommendation" : "Continue"}
+                {step === 1 ? t("Get Started") : step === TOTAL - 1 ? t("See recommendation") : t("Continue")}
                 <ArrowRight className="size-4" />
               </Button>
             </div>

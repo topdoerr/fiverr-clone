@@ -21,6 +21,7 @@ import { GuidesSection } from "@/components/guides-section";
 import { BigCta } from "@/components/big-cta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { getT } from "@/lib/i18n/server";
 import {
   verticals,
   popularOutcomes,
@@ -32,7 +33,8 @@ import {
 
 const whyIcons = [Boxes, Gauge, Eye, BadgeCheck, ShieldCheck, TrendingUp];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getT();
   return (
     <>
       <Hero />
@@ -41,9 +43,9 @@ export default function HomePage() {
       <section className="py-20 sm:py-28">
         <div className="mx-auto w-full max-w-[1700px] px-6">
           <SectionHeading
-            eyebrow="Popular AI outcomes"
-            title="What do you want AI to do?"
-            description="Start from an outcome. We handle the scope, the build, and the review."
+            eyebrow={t("Popular AI outcomes")}
+            title={t("What do you want AI to do?")}
+            description={t("Start from an outcome. We handle the scope, the build, and the review.")}
           />
           <div className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12">
             {popularOutcomes.map((outcome) => (
@@ -63,14 +65,14 @@ export default function HomePage() {
       <Section className="bg-secondary/30 py-20 sm:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
-            eyebrow="Marketplace"
-            title="One marketplace for AI projects"
-            description="Browse AI services like a marketplace — delivered by internal experts and AI agents."
+            eyebrow={t("Marketplace")}
+            title={t("One marketplace for AI projects")}
+            description={t("Browse AI services like a marketplace — delivered by internal experts and AI agents.")}
           />
           <Reveal>
             <Button asChild variant="outline">
               <Link href="/marketplace">
-                View all services
+                {t("View all services")}
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
@@ -93,20 +95,20 @@ export default function HomePage() {
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading
-              eyebrow="How TopDoerr delivers"
-              title="From idea to deployed AI system."
-              description="Marketplace simplicity on the front. A managed delivery standard behind it."
+              eyebrow={t("How TopDoerr delivers")}
+              title={t("From idea to deployed AI system.")}
+              description={t("Marketplace simplicity on the front. A managed delivery standard behind it.")}
             />
             <Reveal delay={0.1}>
               <div className="mt-8 flex flex-wrap gap-2">
-                <Badge variant="electric">Internal talent. AI speed.</Badge>
-                <Badge variant="electric">Human review.</Badge>
+                <Badge variant="electric">{t("Internal talent. AI speed.")}</Badge>
+                <Badge variant="electric">{t("Human review.")}</Badge>
               </div>
             </Reveal>
             <Reveal delay={0.15}>
               <Button asChild className="mt-8">
                 <Link href="/how-it-works">
-                  See how it works
+                  {t("See how it works")}
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -120,9 +122,9 @@ export default function HomePage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="Why not freelancers"
-          title="Not a freelancer marketplace. A managed AI delivery system."
-          description="Traditional marketplaces make you compare hundreds of sellers, negotiate scope, and hope the final delivery is good. TopDoerr works differently. You choose the outcome, submit your brief, and our internal team assigns the right combination of AI strategists, builders, designers, engineers, and agents to deliver the work."
+          eyebrow={t("Why not freelancers")}
+          title={t("Not a freelancer marketplace. A managed AI delivery system.")}
+          description={t("Traditional marketplaces make you compare hundreds of sellers, negotiate scope, and hope the final delivery is good. TopDoerr works differently. You choose the outcome, submit your brief, and our internal team assigns the right combination of AI strategists, builders, designers, engineers, and agents to deliver the work.")}
           className="mb-12"
         />
         <ComparisonTable />
@@ -131,9 +133,9 @@ export default function HomePage() {
       {/* Why TopDoerr feature cards */}
       <Section>
         <SectionHeading
-          eyebrow="Why TopDoerr"
-          title="A marketplace experience. A managed delivery standard."
-          description="TopDoerr gives you the speed of an AI marketplace with the accountability of an internal delivery team. Every service is scoped, routed, built, reviewed, and delivered under one standard."
+          eyebrow={t("Why TopDoerr")}
+          title={t("A marketplace experience. A managed delivery standard.")}
+          description={t("TopDoerr gives you the speed of an AI marketplace with the accountability of an internal delivery team. Every service is scoped, routed, built, reviewed, and delivered under one standard.")}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {whyFeatures.map((f, i) => {
@@ -145,10 +147,10 @@ export default function HomePage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {f.title}
+                    {t(f.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {f.description}
+                    {t(f.description)}
                   </p>
                 </div>
               </Reveal>
@@ -167,20 +169,17 @@ export default function HomePage() {
               <div>
                 <span className="eyebrow text-white/50">
                   <span className="size-1.5 rounded-full bg-electric" />
-                  Enterprise
+                  {t("Enterprise")}
                 </span>
                 <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                  For companies that need more than one AI project.
+                  {t("For companies that need more than one AI project.")}
                 </h2>
                 <p className="mt-4 text-white/60 text-balance">
-                  TopDoerr Enterprise helps teams plan, build, and manage AI
-                  across departments. From voice agents and automation to
-                  dashboards, internal assistants, and AI governance, we provide
-                  one operating partner for AI transformation.
+                  {t("TopDoerr Enterprise helps teams plan, build, and manage AI across departments. From voice agents and automation to dashboards, internal assistants, and AI governance, we provide one operating partner for AI transformation.")}
                 </p>
                 <Button asChild variant="electric" className="mt-8">
                   <Link href="/enterprise">
-                    Talk to Enterprise
+                    {t("Talk to Enterprise")}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -192,7 +191,7 @@ export default function HomePage() {
                     className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/85"
                   >
                     <BadgeCheck className="size-4 shrink-0 text-electric" />
-                    {feat}
+                    {t(feat)}
                   </div>
                 ))}
               </div>
@@ -208,25 +207,25 @@ export default function HomePage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="Testimonials"
-          title="One accountable AI partner."
+          eyebrow={t("Testimonials")}
+          title={t("One accountable AI partner.")}
           className="mb-12"
         />
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={(i % 2) * 0.06}>
+          {testimonials.map((item, i) => (
+            <Reveal key={item.name} delay={(i % 2) * 0.06}>
               <figure className="h-full rounded-2xl border border-border bg-card p-7">
                 <blockquote className="text-base leading-relaxed text-foreground">
-                  “{t.quote}”
+                  “{t(item.quote)}”
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-3">
                   <span className="flex size-10 items-center justify-center rounded-full bg-ink text-sm font-semibold text-electric">
-                    {t.initials}
+                    {item.initials}
                   </span>
                   <span>
-                    <span className="block text-sm font-semibold">{t.name}</span>
+                    <span className="block text-sm font-semibold">{item.name}</span>
                     <span className="block text-xs text-muted-foreground">
-                      {t.role}
+                      {t(item.role)}
                     </span>
                   </span>
                 </figcaption>
@@ -240,9 +239,9 @@ export default function HomePage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <SectionHeading
-            eyebrow="FAQ"
-            title="Questions, answered."
-            description="Still curious? Reach out and TopDoerr will scope it with you."
+            eyebrow={t("FAQ")}
+            title={t("Questions, answered.")}
+            description={t("Still curious? Reach out and TopDoerr will scope it with you.")}
           />
           <div>
             <FaqAccordion items={globalFaq} />

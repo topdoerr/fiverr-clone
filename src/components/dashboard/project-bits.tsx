@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Check, ArrowRight, Clock, ShieldCheck, FileText, CreditCard } from "lucide-react";
 import { Avatar, StatusBadge } from "@/components/dashboard/primitives";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 import type {
   Milestone,
@@ -11,6 +14,7 @@ import type {
 } from "@/lib/dashboard/types";
 
 export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
+  const t = useT();
   return (
     <ol className="relative space-y-5 pl-2">
       <span className="absolute left-[11px] top-2 bottom-2 w-px bg-forest/10" />
@@ -42,7 +46,7 @@ export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
               {m.title}
             </p>
             {m.owner && m.status !== "upcoming" && (
-              <p className="text-xs text-forest/50">{m.owner}</p>
+              <p className="text-xs text-forest/50">{t(m.owner)}</p>
             )}
           </div>
         </li>
@@ -52,16 +56,17 @@ export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
 }
 
 export function AssignedPodCard({ pod }: { pod: PodMember[] }) {
+  const t = useT();
   return (
     <div className="rounded-2xl border border-forest/10 bg-white p-5">
       <div className="flex items-center gap-2">
         <ShieldCheck className="size-4 text-cobalt" />
         <h3 className="font-display text-sm font-semibold text-forest">
-          Your TopDoerr Pod
+          {t("Your TopDoerr Pod")}
         </h3>
       </div>
       <p className="mt-1 text-xs text-forest/55">
-        Internal delivery team — assigned and managed by TopDoerr.
+        {t("Internal delivery team — assigned and managed by TopDoerr.")}
       </p>
       <ul className="mt-4 space-y-3">
         {pod.map((m) => (
@@ -83,6 +88,7 @@ export function RecommendedServiceCard({
 }: {
   service: RecommendedService;
 }) {
+  const t = useT();
   return (
     <div className="flex h-full flex-col rounded-2xl border border-forest/10 bg-white p-5">
       <h3 className="font-display text-sm font-semibold text-forest">
@@ -98,7 +104,7 @@ export function RecommendedServiceCard({
       </div>
       <Button asChild variant="lime" size="sm" className="mt-4 w-full">
         <Link href="/dashboard/briefs/new">
-          Start Brief
+          {t("Start Brief")}
           <ArrowRight className="size-4" />
         </Link>
       </Button>
@@ -120,6 +126,7 @@ export function InvoiceCard({
   invoice: Invoice;
   projectTitle?: string;
 }) {
+  const t = useT();
   return (
     <div className="flex items-center justify-between gap-4 rounded-2xl border border-forest/10 bg-white p-5">
       <div className="flex items-center gap-3">
@@ -143,7 +150,7 @@ export function InvoiceCard({
             invoiceStatusClass[invoice.status]
           )}
         >
-          {invoice.status}
+          {t(invoice.status)}
         </span>
       </div>
     </div>

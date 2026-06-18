@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/reveal";
 import { packageTableRows, type Package } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { getT } from "@/lib/i18n/server";
 
 const TIER_ORDER: Package["tier"][] = ["Starter", "Growth", "Scale"];
 
@@ -26,7 +27,8 @@ function BoolCell({ value }: { value: boolean }) {
   );
 }
 
-export function PackageTable({ packages }: { packages: Package[] }) {
+export async function PackageTable({ packages }: { packages: Package[] }) {
+  const t = await getT();
   const ordered = sortPackages(packages);
 
   return (
@@ -45,28 +47,28 @@ export function PackageTable({ packages }: { packages: Package[] }) {
             >
               <div className="flex items-center justify-between gap-3">
                 <Badge variant={pkg.highlight ? "electric" : "muted"}>
-                  {pkg.tier}
+                  {t(pkg.tier)}
                 </Badge>
                 {pkg.highlight && (
                   <span className="text-xs font-medium text-muted-foreground">
-                    Most popular
+                    {t("Most popular")}
                   </span>
                 )}
               </div>
 
               <h3 className="mt-5 font-display text-lg font-semibold tracking-tight">
-                {pkg.name}
+                {t(pkg.name)}
               </h3>
               <p className="mt-1.5 text-sm text-muted-foreground">
-                {pkg.bestFor}
+                {t(pkg.bestFor)}
               </p>
 
               <div className="mt-5">
                 <div className="font-display text-2xl font-semibold text-foreground">
-                  {pkg.price}
+                  {t(pkg.price)}
                 </div>
                 <div className="mt-1 text-xs text-muted-foreground">
-                  {pkg.deliveryTime}
+                  {t(pkg.deliveryTime)}
                 </div>
               </div>
 
@@ -77,7 +79,7 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                     className="flex items-start gap-2.5 text-sm text-foreground"
                   >
                     <Check className="mt-0.5 size-4 shrink-0 text-electric" />
-                    <span className="leading-snug">{item}</span>
+                    <span className="leading-snug">{t(item)}</span>
                   </li>
                 ))}
               </ul>
@@ -89,7 +91,7 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                   className="w-full"
                 >
                   <Link href="/start">
-                    Start a Project
+                    {t("Start a Project")}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -106,7 +108,7 @@ export function PackageTable({ packages }: { packages: Package[] }) {
             <thead>
               <tr className="border-b border-border bg-secondary/40">
                 <th className="w-48 px-5 py-4 text-left font-medium text-muted-foreground">
-                  Compare packages
+                  {t("Compare packages")}
                 </th>
                 {ordered.map((pkg) => (
                   <th
@@ -114,10 +116,10 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                     className="px-5 py-4 text-left align-bottom"
                   >
                     <span className="block font-display text-base font-semibold text-foreground">
-                      {pkg.tier}
+                      {t(pkg.tier)}
                     </span>
                     <span className="mt-0.5 block text-xs font-normal text-muted-foreground">
-                      {pkg.name}
+                      {t(pkg.name)}
                     </span>
                   </th>
                 ))}
@@ -137,7 +139,7 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                             size="sm"
                             variant={pkg.highlight ? "electric" : "outline"}
                           >
-                            <Link href="/start">Start a Project</Link>
+                            <Link href="/start">{t("Start a Project")}</Link>
                           </Button>
                         </td>
                       ))}
@@ -154,7 +156,7 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                       scope="row"
                       className="px-5 py-4 text-left font-medium text-muted-foreground"
                     >
-                      {row.label}
+                      {t(row.label)}
                     </th>
                     {ordered.map((pkg) => {
                       const value = pkg[key];
@@ -173,12 +175,12 @@ export function PackageTable({ packages }: { packages: Package[] }) {
                                   className="flex items-start gap-2 text-sm"
                                 >
                                   <Check className="mt-0.5 size-3.5 shrink-0 text-electric" />
-                                  <span className="leading-snug">{item}</span>
+                                  <span className="leading-snug">{t(item)}</span>
                                 </li>
                               ))}
                             </ul>
                           ) : (
-                            <span className="text-sm">{value}</span>
+                            <span className="text-sm">{value ? t(value) : null}</span>
                           )}
                         </td>
                       );

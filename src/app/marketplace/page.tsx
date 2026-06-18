@@ -21,6 +21,7 @@ import { CTASection } from "@/components/cta-section";
 import { ScrollRow } from "@/components/marketplace/scroll-row";
 import { verticals } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Explore AI Services",
@@ -90,14 +91,15 @@ const managers = [
   { name: "Priya Nair", role: "Product Designer", initials: "PN", tone: "from-zinc-600 to-zinc-900" },
 ];
 
-export default function MarketplacePage() {
+export default async function MarketplacePage() {
+  const t = await getT();
   return (
     <>
       {/* Category nav */}
       <div className="sticky top-16 z-30 border-b border-border bg-background/90 backdrop-blur-xl">
         <div className="container-tight flex items-center gap-6 overflow-x-auto py-3.5 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <span className="shrink-0 font-semibold text-foreground">
-            Popular 🔥
+            {t("Popular 🔥")}
           </span>
           {verticals.map((v) => (
             <Link
@@ -105,7 +107,7 @@ export default function MarketplacePage() {
               href={`/marketplace/${v.slug}`}
               className="shrink-0 whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground"
             >
-              {v.name}
+              {t(v.name)}
             </Link>
           ))}
         </div>
@@ -121,19 +123,18 @@ export default function MarketplacePage() {
             <div className="relative">
               <span className="eyebrow justify-center text-white/55">
                 <span className="size-1.5 rounded-full bg-electric" />
-                Marketplace
+                {t("Marketplace")}
               </span>
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-                Explore AI Services
+                {t("Explore AI Services")}
               </h1>
               <p className="mx-auto mt-4 max-w-xl text-white/70 text-balance">
-                Buy AI outcomes. Delivered by TopDoerr. No random freelancers —
-                every service is scoped, built, and human-reviewed.
+                {t("Buy AI outcomes. Delivered by TopDoerr. No random freelancers — every service is scoped, built, and human-reviewed.")}
               </p>
               <Button asChild variant="invert" className="mt-8">
                 <Link href="/how-it-works">
                   <Play className="size-4" />
-                  How TopDoerr works
+                  {t("How TopDoerr works")}
                 </Link>
               </Button>
             </div>
@@ -155,7 +156,7 @@ export default function MarketplacePage() {
                     <Icon className="size-5" />
                   </span>
                   <span className="text-sm font-semibold leading-tight">
-                    {v.name}
+                    {t(v.name)}
                   </span>
                 </span>
                 <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
@@ -170,12 +171,11 @@ export default function MarketplacePage() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Big AI project?{" "}
-                  <span className="text-electric">We&apos;ll handle it</span>
+                  {t("Big AI project?")}{" "}
+                  <span className="text-electric">{t("We'll handle it")}</span>
                 </h2>
                 <p className="mt-3 max-w-md text-sm text-muted-foreground">
-                  From scoping to execution, work with a TopDoerr delivery pod
-                  that:
+                  {t("From scoping to execution, work with a TopDoerr delivery pod that:")}
                 </p>
                 <ul className="mt-5 space-y-2.5">
                   {[
@@ -185,17 +185,17 @@ export default function MarketplacePage() {
                   ].map((line) => (
                     <li key={line} className="flex items-center gap-2.5 text-sm">
                       <Check className="size-4 shrink-0 text-electric" strokeWidth={3} />
-                      {line}
+                      {t(line)}
                     </li>
                   ))}
                 </ul>
                 <div className="mt-7 flex flex-wrap items-center gap-5">
                   <Button asChild>
-                    <Link href="/start">Book a free consultation</Link>
+                    <Link href="/start">{t("Book a free consultation")}</Link>
                   </Button>
                   <span className="flex items-center gap-2 text-sm text-muted-foreground">
                     <ShieldCheck className="size-4" />
-                    Money-back guarantee
+                    {t("Money-back guarantee")}
                   </span>
                 </div>
               </div>
@@ -222,15 +222,15 @@ export default function MarketplacePage() {
                         {m.name}
                       </div>
                       <div className="mt-0.5 text-xs text-muted-foreground">
-                        {m.role}
+                        {t(m.role)}
                       </div>
                     </div>
                   ))}
                 </div>
                 <p className="mt-5 text-center text-sm text-muted-foreground">
-                  Our delivery pods,{" "}
+                  {t("Our delivery pods,")}{" "}
                   <span className="font-semibold text-foreground">
-                    managed by TopDoerr
+                    {t("managed by TopDoerr")}
                   </span>
                 </p>
               </div>
@@ -241,7 +241,7 @@ export default function MarketplacePage() {
         {/* Explore grid */}
         <div>
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            Explore AI Services
+            {t("Explore AI Services")}
           </h2>
           <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {exploreGroups.map((group, gi) => (
@@ -268,7 +268,7 @@ export default function MarketplacePage() {
                     ))}
                   </div>
                   <h3 className="mt-4 font-display text-base font-semibold">
-                    {group.title}
+                    {t(group.title)}
                   </h3>
                   <ul className="mt-3 space-y-2.5">
                     {group.links.map((link) => (
@@ -277,7 +277,7 @@ export default function MarketplacePage() {
                           href={link.href}
                           className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:underline"
                         >
-                          {link.label}
+                          {t(link.label)}
                         </Link>
                       </li>
                     ))}

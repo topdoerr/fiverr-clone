@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/dashboard/primitives";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 type NavItem = { label: string; href: string; icon: LucideIcon; match?: string };
@@ -42,6 +43,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, company, logout } = useApp();
+  const t = useT();
   const [open, setOpen] = useState(false);
 
   const isActive = (item: NavItem) => {
@@ -91,7 +93,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
               )}
             >
               <Icon className={cn("size-5", active ? "text-forest" : "text-forest/50")} />
-              {item.label}
+              {t(item.label)}
             </Link>
           );
         })}
@@ -106,7 +108,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-forest/60 transition-colors hover:bg-cream hover:text-forest"
         >
           <LogOut className="size-5 text-forest/50" />
-          Log out
+          {t("Log out")}
         </button>
       </div>
     </div>
@@ -143,7 +145,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           <div className="relative hidden max-w-sm flex-1 sm:block">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-forest/40" />
             <input
-              placeholder="Search projects…"
+              placeholder={t("Search projects…")}
               className="h-9 w-full rounded-full border border-forest/10 bg-white pl-9 pr-4 text-sm text-forest placeholder:text-forest/40 focus:border-cobalt/40 focus:outline-none"
             />
           </div>
@@ -158,7 +160,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             </button>
             <Button asChild variant="lime" size="sm">
               <Link href="/dashboard/briefs/new">
-                Start Project
+                {t("Start Project")}
                 <ArrowRight className="size-4" />
               </Link>
             </Button>

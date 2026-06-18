@@ -27,11 +27,13 @@ import {
   RevisionRequestModal,
 } from "@/components/dashboard/modals";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { getProject, messages, files, approveProject } = useApp();
+  const t = useT();
   const project = getProject(id);
 
   const [uploadOpen, setUploadOpen] = useState(false);
@@ -42,13 +44,13 @@ export default function ProjectDetailPage() {
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="mx-auto max-w-md rounded-2xl border border-forest/10 bg-white p-10 text-center">
           <h1 className="font-display text-xl font-semibold text-forest">
-            Project not found
+            {t("Project not found")}
           </h1>
           <p className="mt-2 text-sm text-forest/60">
-            We couldn&apos;t find that project. It may have been removed.
+            {t("We couldn't find that project. It may have been removed.")}
           </p>
           <Button asChild variant="lime" className="mt-6">
-            <Link href="/dashboard/projects">Back to projects</Link>
+            <Link href="/dashboard/projects">{t("Back to projects")}</Link>
           </Button>
         </div>
       </div>
@@ -69,7 +71,7 @@ export default function ProjectDetailPage() {
           className="inline-flex items-center gap-1.5 text-sm font-medium text-cobalt hover:underline"
         >
           <ArrowLeft className="size-4" />
-          Back to projects
+          {t("Back to projects")}
         </Link>
 
         <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
@@ -85,11 +87,11 @@ export default function ProjectDetailPage() {
               {project.startDate && (
                 <>
                   <span className="text-forest/30">·</span>
-                  <span>Started {project.startDate}</span>
+                  <span>{t("Started")} {project.startDate}</span>
                 </>
               )}
               <span className="text-forest/30">·</span>
-              <span>Est. delivery {project.dueDate}</span>
+              <span>{t("Est. delivery")} {project.dueDate}</span>
             </div>
           </div>
 
@@ -97,16 +99,16 @@ export default function ProjectDetailPage() {
             <Button asChild variant="forest">
               <a href="#messages">
                 <MessageSquare className="size-4" />
-                Message TopDoerr
+                {t("Message TopDoerr")}
               </a>
             </Button>
             <Button variant="outline" onClick={() => setUploadOpen(true)}>
               <Upload className="size-4" />
-              Upload File
+              {t("Upload File")}
             </Button>
             <Button variant="lime" onClick={() => setRevisionOpen(true)}>
               <RefreshCw className="size-4" />
-              Request Revision
+              {t("Request Revision")}
             </Button>
           </div>
         </div>
@@ -119,10 +121,10 @@ export default function ProjectDetailPage() {
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-sm font-semibold text-forest">
-                Overall progress
+                {t("Overall progress")}
               </h2>
               <span className="text-sm font-medium text-forest">
-                {project.progress}% complete
+                {project.progress}% {t("complete")}
               </span>
             </div>
             <ProgressBar
@@ -135,7 +137,7 @@ export default function ProjectDetailPage() {
           {/* Progress timeline */}
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <h2 className="mb-4 font-display text-sm font-semibold text-forest">
-              Progress
+              {t("Progress")}
             </h2>
             <MilestoneTimeline milestones={project.milestones} />
           </div>
@@ -143,7 +145,7 @@ export default function ProjectDetailPage() {
           {/* Deliverables */}
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <h2 className="mb-4 font-display text-sm font-semibold text-forest">
-              Deliverables
+              {t("Deliverables")}
             </h2>
             <ul className="space-y-3">
               {project.deliverables.map((d) => (
@@ -176,7 +178,7 @@ export default function ProjectDetailPage() {
           {/* Client actions needed */}
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <h2 className="mb-4 font-display text-sm font-semibold text-forest">
-              Action needed from you
+              {t("Action needed from you")}
             </h2>
             <ul className="space-y-3">
               {project.clientActions.map((a) => (
@@ -206,7 +208,7 @@ export default function ProjectDetailPage() {
           {/* Files */}
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <h2 className="mb-4 font-display text-sm font-semibold text-forest">
-              Files
+              {t("Files")}
             </h2>
             {projectFiles.length ? (
               <ul className="space-y-2">
@@ -236,7 +238,7 @@ export default function ProjectDetailPage() {
                           : "border-forest/15 bg-forest/5 text-forest/70"
                       )}
                     >
-                      {f.uploadedBy === "buyer" ? "You" : "TopDoerr"}
+                      {f.uploadedBy === "buyer" ? t("You") : "TopDoerr"}
                     </span>
                   </li>
                 ))}
@@ -244,11 +246,11 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-3">
                 <p className="text-sm text-forest/50">
-                  No files yet for this project.
+                  {t("No files yet for this project.")}
                 </p>
                 <Button variant="outline" onClick={() => setUploadOpen(true)}>
                   <Upload className="size-4" />
-                  Upload File
+                  {t("Upload File")}
                 </Button>
               </div>
             )}
@@ -257,7 +259,7 @@ export default function ProjectDetailPage() {
           {/* Messages */}
           <section id="messages" className="scroll-mt-24 space-y-4">
             <h2 className="font-display text-lg font-semibold text-forest">
-              Messages
+              {t("Messages")}
             </h2>
             <MessageThread projectId={id} messages={projectMessages} />
           </section>
@@ -266,31 +268,30 @@ export default function ProjectDetailPage() {
           {showDelivery && (
             <div className="rounded-2xl border border-lime-dim/40 bg-lime/10 p-5">
               <h2 className="font-display text-base font-semibold text-forest">
-                Final delivery
+                {t("Final delivery")}
               </h2>
               <p className="mt-1 text-sm text-forest/60">
-                Review your deliverables, approve the project, or request any
-                last changes.
+                {t("Review your deliverables, approve the project, or request any last changes.")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Button variant="outline">
                   <Download className="size-4" />
-                  Download deliverables
+                  {t("Download deliverables")}
                 </Button>
                 <Button variant="lime" onClick={() => approveProject(id)}>
                   <Check className="size-4" />
-                  Approve project
+                  {t("Approve project")}
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setRevisionOpen(true)}
                 >
                   <RefreshCw className="size-4" />
-                  Request revision
+                  {t("Request revision")}
                 </Button>
                 <Button asChild variant="forest">
                   <Link href="/dashboard/briefs/new">
-                    Start a follow-up project
+                    {t("Start a follow-up project")}
                   </Link>
                 </Button>
               </div>
@@ -304,14 +305,14 @@ export default function ProjectDetailPage() {
 
           <div className="rounded-2xl border border-forest/10 bg-white p-5">
             <h3 className="font-display text-sm font-semibold text-forest">
-              Current milestone
+              {t("Current milestone")}
             </h3>
             <p className="mt-3 text-sm font-medium text-forest">
               {project.currentMilestone}
             </p>
-            <p className="mt-1 text-xs text-forest/55">Owner: TopDoerr Pod</p>
+            <p className="mt-1 text-xs text-forest/55">{t("Owner: TopDoerr Pod")}</p>
             <p className="mt-1 text-xs text-forest/55">
-              Due {project.dueDate}
+              {t("Due")} {project.dueDate}
             </p>
             <div className="mt-3">
               <StatusBadge status={project.status} />

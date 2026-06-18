@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
+import { getT } from "@/lib/i18n/server";
 
 /* ---- avatar helpers ---------------------------------------------------- */
 
@@ -50,7 +51,8 @@ const pod = [
   { name: "Priya", role: "Product Designer", initials: "PR" },
 ];
 
-function PodCluster() {
+async function PodCluster() {
+  const t = await getT();
   return (
     <div className="relative mx-auto h-[300px] w-full max-w-sm">
       {/* chat pill */}
@@ -74,7 +76,7 @@ function PodCluster() {
           <Avatar initials={pod[0].initials} tone={0} className="size-8 rounded-lg text-xs" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-ink">{pod[0].name}</div>
-            <div className="text-[11px] text-muted-foreground">{pod[0].role}</div>
+            <div className="text-[11px] text-muted-foreground">{t(pod[0].role)}</div>
           </div>
         </div>
       </div>
@@ -95,7 +97,8 @@ const specialists = [
   { name: "Tomás Rey", role: "Data Lead", initials: "TR", rot: "rotate-6" },
 ];
 
-function SpecialistsRow() {
+async function SpecialistsRow() {
+  const t = await getT();
   return (
     <div className="flex items-end justify-center">
       {specialists.map((s, i) => {
@@ -125,7 +128,7 @@ function SpecialistsRow() {
                   {s.name}
                 </div>
                 <div className="text-[10px] leading-tight text-white/60">
-                  {s.role}
+                  {t(s.role)}
                 </div>
               </div>
             </div>
@@ -138,7 +141,8 @@ function SpecialistsRow() {
 
 /* ---- banners ----------------------------------------------------------- */
 
-export function PromoBanners() {
+export async function PromoBanners() {
+  const t = await getT();
   return (
     <div className="container-tight space-y-6 py-10">
       {/* Banner A — assign the pod */}
@@ -150,10 +154,10 @@ export function PromoBanners() {
             <div>
               <span className="eyebrow text-white/55">
                 <span className="size-1.5 rounded-full bg-electric" />
-                TopDoerr Pods
+                {t("TopDoerr Pods")}
               </span>
               <h3 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-balance sm:text-4xl">
-                Let TopDoerr assign the right pod for you
+                {t("Let TopDoerr assign the right pod for you")}
               </h3>
               <ul className="mt-6 space-y-3">
                 {[
@@ -165,20 +169,20 @@ export function PromoBanners() {
                     <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-electric text-white">
                       <Check className="size-3" strokeWidth={3} />
                     </span>
-                    {line}
+                    {t(line)}
                   </li>
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <Button asChild variant="invert">
                   <Link href="/how-it-works">
-                    See how delivery works
+                    {t("See how delivery works")}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
                 <span className="flex items-center gap-2 text-sm text-white/70">
                   <ShieldCheck className="size-4 text-electric" />
-                  100% human-reviewed delivery
+                  {t("100% human-reviewed delivery")}
                 </span>
               </div>
             </div>
@@ -194,16 +198,14 @@ export function PromoBanners() {
           <div className="relative grid items-center gap-12 lg:grid-cols-2">
             <div>
               <h3 className="font-display text-3xl font-semibold leading-[1.1] tracking-tight text-balance sm:text-4xl">
-                The managed AI era has arrived
+                {t("The managed AI era has arrived")}
               </h3>
               <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 sm:text-base">
-                From idea to deployed AI system, work with TopDoerr&apos;s internal
-                strategists, builders, designers, engineers, and AI agents to ship
-                outcomes that drive real impact.
+                {t("From idea to deployed AI system, work with TopDoerr's internal strategists, builders, designers, engineers, and AI agents to ship outcomes that drive real impact.")}
               </p>
               <Button asChild variant="invert" className="mt-8">
                 <Link href="/start">
-                  Start a Project
+                  {t("Start a Project")}
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>

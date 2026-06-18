@@ -9,10 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 export default function SignupPage() {
   const { signup, authMode } = useApp();
   const router = useRouter();
+  const t = useT();
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -31,12 +33,12 @@ export default function SignupPage() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!form.fullName.trim()) e.fullName = "Full name is required.";
-    if (!form.email.trim()) e.email = "Work email is required.";
-    if (!form.company.trim()) e.company = "Company name is required.";
-    if (form.password.length < 8) e.password = "Password must be at least 8 characters.";
-    if (form.confirm !== form.password) e.confirm = "Passwords do not match.";
-    if (!agree) e.agree = "Please accept the Terms and Privacy Policy.";
+    if (!form.fullName.trim()) e.fullName = t("Full name is required.");
+    if (!form.email.trim()) e.email = t("Work email is required.");
+    if (!form.company.trim()) e.company = t("Company name is required.");
+    if (form.password.length < 8) e.password = t("Password must be at least 8 characters.");
+    if (form.confirm !== form.password) e.confirm = t("Passwords do not match.");
+    if (!agree) e.agree = t("Please accept the Terms and Privacy Policy.");
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -70,8 +72,8 @@ export default function SignupPage() {
   ) => (
     <div className="space-y-1.5">
       <Label htmlFor={id}>
-        {label}
-        {optional && <span className="ml-1 text-forest/40">(optional)</span>}
+        {t(label)}
+        {optional && <span className="ml-1 text-forest/40">{t("(optional)")}</span>}
       </Label>
       <Input
         id={id}
@@ -109,13 +111,13 @@ export default function SignupPage() {
             className="mt-0.5"
           />
           <span>
-            I agree to TopDoerr&apos;s{" "}
+            {t("I agree to TopDoerr's")}{" "}
             <Link href="#" className="text-cobalt hover:underline">
-              Terms
+              {t("Terms")}
             </Link>{" "}
-            and{" "}
+            {t("and")}{" "}
             <Link href="#" className="text-cobalt hover:underline">
-              Privacy Policy
+              {t("Privacy Policy")}
             </Link>
             .
           </span>
@@ -134,18 +136,18 @@ export default function SignupPage() {
           className="w-full"
           disabled={submitting}
         >
-          {submitting ? "Creating account…" : "Create Account"}
+          {submitting ? t("Creating account…") : t("Create Account")}
         </Button>
 
         <p className="text-center text-sm text-forest/60">
-          Already have an account?{" "}
+          {t("Already have an account?")}{" "}
           <Link href="/login" className="font-medium text-cobalt hover:underline">
-            Log in
+            {t("Log in")}
           </Link>
         </p>
         {authMode === "supabase" && (
           <p className="text-center text-xs text-forest/40">
-            🔒 Secured by Supabase
+            {t("🔒 Secured by Supabase")}
           </p>
         )}
       </form>

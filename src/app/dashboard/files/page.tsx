@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/dashboard/primitives";
 import { FileUploadModal } from "@/components/dashboard/modals";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 export default function FilesPage() {
   const { files, projects } = useApp();
+  const t = useT();
   const [selectedId, setSelectedId] = useState(projects[0]?.id ?? "");
   const [uploadOpen, setUploadOpen] = useState(false);
 
@@ -17,10 +19,10 @@ export default function FilesPage() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <h1 className="font-display text-2xl font-semibold tracking-tight text-forest">
-            Files
+            {t("Files")}
           </h1>
           <p className="mt-2 text-sm text-forest/60">
-            Files you&apos;ve shared and deliverables from TopDoerr.
+            {t("Files you've shared and deliverables from TopDoerr.")}
           </p>
         </div>
         {projects.length > 0 && (
@@ -38,7 +40,7 @@ export default function FilesPage() {
               ))}
             </select>
             <Button variant="lime" onClick={() => setUploadOpen(true)}>
-              Upload File
+              {t("Upload File")}
             </Button>
           </div>
         )}
@@ -77,7 +79,7 @@ export default function FilesPage() {
                   </span>
                   <span>{f.size}</span>
                   <span className="inline-flex items-center rounded-full border border-cobalt/20 bg-cobalt/10 px-2 py-0.5 font-medium text-cobalt">
-                    {mine ? "You" : "TopDoerr"}
+                    {mine ? t("You") : "TopDoerr"}
                   </span>
                   <span>{new Date(f.createdAt).toLocaleDateString()}</span>
                 </div>

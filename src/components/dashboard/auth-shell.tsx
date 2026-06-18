@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Check } from "lucide-react";
+import { useT } from "@/lib/i18n/client";
 
 export function AuthShell({
   heading,
@@ -11,6 +14,7 @@ export function AuthShell({
   subheading: string;
   children: ReactNode;
 }) {
+  const t = useT();
   return (
     <div className="grid min-h-screen bg-cream lg:grid-cols-2">
       {/* Form side */}
@@ -21,9 +25,9 @@ export function AuthShell({
         </Link>
         <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center py-10">
           <h1 className="font-display text-3xl font-semibold tracking-tight text-forest text-balance">
-            {heading}
+            {t(heading)}
           </h1>
-          <p className="mt-3 text-forest/60">{subheading}</p>
+          <p className="mt-3 text-forest/60">{t(subheading)}</p>
           <div className="mt-8">{children}</div>
         </div>
       </div>
@@ -41,10 +45,10 @@ export function AuthShell({
         <div className="absolute -right-16 top-10 size-72 rounded-full bg-cobalt/30 blur-[100px]" />
         <div className="relative max-w-md">
           <p className="font-display text-4xl font-semibold leading-tight tracking-tight">
-            Buy the Outcome.{" "}
-            <span className="text-lime">Not the Freelancer.</span>
+            {t("Buy the Outcome.")}{" "}
+            <span className="text-lime">{t("Not the Freelancer.")}</span>
           </p>
-          <p className="mt-4 text-cream/70">AI Execution, Delivered by TopDoerr.</p>
+          <p className="mt-4 text-cream/70">{t("AI Execution, Delivered by TopDoerr.")}</p>
           <ul className="mt-10 space-y-4">
             {[
               "Internal AI talent — no freelancers to manage",
@@ -56,7 +60,7 @@ export function AuthShell({
                 <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-lime text-forest">
                   <Check className="size-3" strokeWidth={3} />
                 </span>
-                {line}
+                {t(line)}
               </li>
             ))}
           </ul>

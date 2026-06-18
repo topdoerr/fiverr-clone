@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useT } from "@/lib/i18n/client";
 import type { Vertical } from "@/lib/data";
 
 export function ServiceCard({ vertical }: { vertical: Vertical }) {
+  const t = useT();
   const Icon = vertical.icon;
   return (
     <Link
@@ -15,32 +19,32 @@ export function ServiceCard({ vertical }: { vertical: Vertical }) {
           <Icon className="size-5" />
         </div>
         <span className="text-sm font-semibold text-foreground">
-          {vertical.startingPrice}
+          {t(vertical.startingPrice)}
         </span>
       </div>
 
       <h3 className="mt-5 font-display text-lg font-semibold tracking-tight">
-        {vertical.name}
+        {t(vertical.name)}
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        {vertical.shortDescription}
+        {t(vertical.shortDescription)}
       </p>
 
       <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground">
         <Clock className="size-3.5" />
-        {vertical.deliveryTime}
+        {t(vertical.deliveryTime)}
       </div>
 
       <div className="mt-4 flex flex-wrap gap-1.5">
         {vertical.tags.map((tag) => (
           <Badge key={tag} variant="muted">
-            {tag}
+            {t(tag)}
           </Badge>
         ))}
       </div>
 
       <div className="mt-6 flex items-center gap-1.5 text-sm font-medium text-foreground">
-        View packages
+        {t("View packages")}
         <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
       </div>
     </Link>

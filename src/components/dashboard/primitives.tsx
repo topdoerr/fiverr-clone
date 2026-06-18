@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { statusConfig } from "@/lib/dashboard/status";
 import type { ProjectStatus } from "@/lib/dashboard/types";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 export function ProgressBar({
@@ -32,6 +35,7 @@ export function ProgressBar({
 
 export function StatusBadge({ status }: { status: ProjectStatus }) {
   const c = statusConfig[status];
+  const t = useT();
   return (
     <span
       className={cn(
@@ -40,7 +44,7 @@ export function StatusBadge({ status }: { status: ProjectStatus }) {
       )}
     >
       <span className="size-1.5 rounded-full bg-current opacity-70" />
-      {status}
+      {t(status)}
     </span>
   );
 }
@@ -54,10 +58,11 @@ export function MetricCard({
   value: ReactNode;
   icon?: LucideIcon;
 }) {
+  const t = useT();
   return (
     <div className="rounded-2xl border border-forest/10 bg-white p-5">
       <div className="flex items-center justify-between">
-        <span className="text-sm text-forest/60">{label}</span>
+        <span className="text-sm text-forest/60">{t(label)}</span>
         {Icon && <Icon className="size-4 text-forest/35" />}
       </div>
       <div className="mt-3 font-display text-3xl font-semibold text-forest">
@@ -80,6 +85,7 @@ export function EmptyState({
   actionLabel?: string;
   actionHref?: string;
 }) {
+  const t = useT();
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-forest/15 bg-white/70 px-6 py-16 text-center">
       {Icon && (
@@ -88,11 +94,11 @@ export function EmptyState({
         </div>
       )}
       <h3 className="mt-4 font-display text-lg font-semibold text-forest">
-        {title}
+        {t(title)}
       </h3>
-      <p className="mt-1 max-w-sm text-sm text-forest/60">{description}</p>
+      <p className="mt-1 max-w-sm text-sm text-forest/60">{t(description)}</p>
       <Button asChild variant="lime" className="mt-6">
-        <Link href={actionHref}>{actionLabel}</Link>
+        <Link href={actionHref}>{t(actionLabel)}</Link>
       </Button>
     </div>
   );

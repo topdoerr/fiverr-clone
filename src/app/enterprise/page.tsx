@@ -13,6 +13,7 @@ import { DeliveryProcess } from "@/components/delivery-process";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { enterpriseFeatures, testimonials } from "@/lib/data";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Enterprise",
@@ -43,7 +44,8 @@ const valuePillars = [
 
 const enterpriseTestimonials = testimonials.slice(2, 4);
 
-export default function EnterprisePage() {
+export default async function EnterprisePage() {
+  const t = await getT();
   return (
     <>
       {/* Dark hero */}
@@ -56,27 +58,26 @@ export default function EnterprisePage() {
             <Reveal>
               <span className="eyebrow text-white/50">
                 <span className="size-1.5 rounded-full bg-electric" />
-                TopDoerr Enterprise
+                {t("TopDoerr Enterprise")}
               </span>
             </Reveal>
             <Reveal delay={0.05}>
               <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-                For companies that need more than one AI project.
+                {t("For companies that need more than one AI project.")}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-5 text-base leading-relaxed text-white/60 text-balance sm:text-lg">
-                TopDoerr Enterprise helps teams plan, build, and manage AI across
-                departments. From voice agents and automation to dashboards,
-                internal assistants, and AI governance, we provide one operating
-                partner for AI transformation.
+                {t(
+                  "TopDoerr Enterprise helps teams plan, build, and manage AI across departments. From voice agents and automation to dashboards, internal assistants, and AI governance, we provide one operating partner for AI transformation."
+                )}
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button asChild variant="electric" size="lg">
                   <Link href="/start">
-                    Talk to Enterprise
+                    {t("Talk to Enterprise")}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -85,7 +86,7 @@ export default function EnterprisePage() {
                   size="lg"
                   className="bg-white/10 text-white hover:bg-white/20"
                 >
-                  <Link href="/marketplace">Explore Services</Link>
+                  <Link href="/marketplace">{t("Explore Services")}</Link>
                 </Button>
               </div>
             </Reveal>
@@ -96,16 +97,18 @@ export default function EnterprisePage() {
       {/* Enterprise features grid */}
       <Section>
         <SectionHeading
-          eyebrow="What's included"
-          title="Everything an AI operating partner should bring."
-          description="Enterprise engagements run on a managed standard built for scale, security, and accountability across your organization."
+          eyebrow={t("What's included")}
+          title={t("Everything an AI operating partner should bring.")}
+          description={t(
+            "Enterprise engagements run on a managed standard built for scale, security, and accountability across your organization."
+          )}
         />
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {enterpriseFeatures.map((feat, i) => (
             <Reveal key={feat} delay={(i % 4) * 0.05}>
               <div className="flex h-full items-start gap-3 rounded-2xl border border-border bg-card p-5">
                 <BadgeCheck className="mt-0.5 size-5 shrink-0 text-electric" />
-                <span className="text-sm font-medium leading-snug">{feat}</span>
+                <span className="text-sm font-medium leading-snug">{t(feat)}</span>
               </div>
             </Reveal>
           ))}
@@ -115,9 +118,11 @@ export default function EnterprisePage() {
       {/* Value pillars */}
       <Section className="bg-secondary/30">
         <SectionHeading
-          eyebrow="Why Enterprise"
-          title="One accountable partner for AI across the org."
-          description="Stop coordinating vendors and freelancers. Run every AI initiative through a single managed standard."
+          eyebrow={t("Why Enterprise")}
+          title={t("One accountable partner for AI across the org.")}
+          description={t(
+            "Stop coordinating vendors and freelancers. Run every AI initiative through a single managed standard."
+          )}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {valuePillars.map((pillar, i) => {
@@ -129,10 +134,10 @@ export default function EnterprisePage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {pillar.title}
+                    {t(pillar.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {pillar.description}
+                    {t(pillar.description)}
                   </p>
                 </div>
               </Reveal>
@@ -146,9 +151,11 @@ export default function EnterprisePage() {
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading
-              eyebrow="How we deliver"
-              title="From AI roadmap to delivered systems."
-              description="Enterprise engagements run on the same managed delivery process — scoped, routed, built, and human-reviewed — coordinated across multiple projects and departments."
+              eyebrow={t("How we deliver")}
+              title={t("From AI roadmap to delivered systems.")}
+              description={t(
+                "Enterprise engagements run on the same managed delivery process — scoped, routed, built, and human-reviewed — coordinated across multiple projects and departments."
+              )}
             />
           </div>
           <DeliveryProcess />
@@ -159,25 +166,27 @@ export default function EnterprisePage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="Testimonials"
-          title="Trusted as an internal AI team."
+          eyebrow={t("Testimonials")}
+          title={t("Trusted as an internal AI team.")}
           className="mb-12"
         />
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {enterpriseTestimonials.map((t, i) => (
-            <Reveal key={t.name} delay={(i % 2) * 0.06}>
+          {enterpriseTestimonials.map((item, i) => (
+            <Reveal key={item.name} delay={(i % 2) * 0.06}>
               <figure className="h-full rounded-2xl border border-border bg-card p-7">
                 <blockquote className="text-base leading-relaxed text-foreground">
-                  &ldquo;{t.quote}&rdquo;
+                  &ldquo;{t(item.quote)}&rdquo;
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-3">
                   <span className="flex size-10 items-center justify-center rounded-full bg-ink text-sm font-semibold text-electric">
-                    {t.initials}
+                    {item.initials}
                   </span>
                   <span>
-                    <span className="block text-sm font-semibold">{t.name}</span>
+                    <span className="block text-sm font-semibold">
+                      {item.name}
+                    </span>
                     <span className="block text-xs text-muted-foreground">
-                      {t.role}
+                      {t(item.role)}
                     </span>
                   </span>
                 </figcaption>
@@ -188,10 +197,12 @@ export default function EnterprisePage() {
       </Section>
 
       <CTASection
-        title="Plan your AI transformation with one partner."
-        description="From a single department to an org-wide roadmap, TopDoerr Enterprise plans, builds, and manages your AI under one accountable standard."
-        primary={{ label: "Talk to Enterprise", href: "/start" }}
-        secondary={{ label: "Explore Services", href: "/marketplace" }}
+        title={t("Plan your AI transformation with one partner.")}
+        description={t(
+          "From a single department to an org-wide roadmap, TopDoerr Enterprise plans, builds, and manages your AI under one accountable standard."
+        )}
+        primary={{ label: t("Talk to Enterprise"), href: "/start" }}
+        secondary={{ label: t("Explore Services"), href: "/marketplace" }}
       />
     </>
   );

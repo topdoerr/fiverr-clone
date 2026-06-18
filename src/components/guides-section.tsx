@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
+import { getT } from "@/lib/i18n/server";
 
 type Guide = {
   title: string;
@@ -41,19 +42,20 @@ const guides: Guide[] = [
   },
 ];
 
-export function GuidesSection() {
+export async function GuidesSection() {
+  const t = await getT();
   return (
     <section className="py-20 sm:py-28">
       <div className="container-tight">
         <div className="flex items-end justify-between gap-4">
           <h2 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Guides to help you grow
+            {t("Guides to help you grow")}
           </h2>
           <Link
             href="/how-it-works"
             className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            See more guides
+            {t("See more guides")}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -85,10 +87,10 @@ export function GuidesSection() {
                     </div>
                   </div>
                   <h3 className="mt-3 text-sm font-semibold text-foreground group-hover:underline">
-                    {guide.title}
+                    {t(guide.title)}
                   </h3>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {guide.blurb}
+                    {t(guide.blurb)}
                   </p>
                 </Link>
               </Reveal>

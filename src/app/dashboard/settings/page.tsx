@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 const notificationRows = [
   { key: "projectUpdates", label: "Project updates" },
@@ -19,6 +20,7 @@ type NotificationKey = (typeof notificationRows)[number]["key"];
 
 export default function SettingsPage() {
   const { user, company, completeOnboarding, toast } = useApp();
+  const t = useT();
 
   const [name, setName] = useState(company?.name ?? "");
   const [website, setWebsite] = useState(company?.website ?? "");
@@ -39,25 +41,25 @@ export default function SettingsPage() {
 
   const saveCompany = () => {
     completeOnboarding({ name, website, industry, size, location });
-    toast("Settings saved.");
+    toast(t("Settings saved."));
   };
 
   const saveProfile = () => {
-    toast("Profile updated.");
+    toast(t("Profile updated."));
   };
 
   const saveNotifications = () => {
-    toast("Notification preferences saved.");
+    toast(t("Notification preferences saved."));
   };
 
   return (
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
         <h1 className="font-display text-2xl font-semibold tracking-tight text-forest">
-          Settings
+          {t("Settings")}
         </h1>
         <p className="mt-2 text-sm text-forest/60">
-          Company profile, your profile, and notifications.
+          {t("Company profile, your profile, and notifications.")}
         </p>
       </div>
 
@@ -66,16 +68,16 @@ export default function SettingsPage() {
         <div className="flex items-center gap-2">
           <Building2 className="size-4 text-cobalt" />
           <h2 className="font-display text-base font-semibold text-forest">
-            Company profile
+            {t("Company profile")}
           </h2>
         </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="co-name">Company name</Label>
+            <Label htmlFor="co-name">{t("Company name")}</Label>
             <Input id="co-name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="co-website">Website</Label>
+            <Label htmlFor="co-website">{t("Website")}</Label>
             <Input
               id="co-website"
               value={website}
@@ -83,7 +85,7 @@ export default function SettingsPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="co-industry">Industry</Label>
+            <Label htmlFor="co-industry">{t("Industry")}</Label>
             <Input
               id="co-industry"
               value={industry}
@@ -91,11 +93,11 @@ export default function SettingsPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="co-size">Company size</Label>
+            <Label htmlFor="co-size">{t("Company size")}</Label>
             <Input id="co-size" value={size} onChange={(e) => setSize(e.target.value)} />
           </div>
           <div className="space-y-1.5 sm:col-span-2">
-            <Label htmlFor="co-location">Location</Label>
+            <Label htmlFor="co-location">{t("Location")}</Label>
             <Input
               id="co-location"
               value={location}
@@ -105,7 +107,7 @@ export default function SettingsPage() {
         </div>
         <div className="mt-5 flex justify-end">
           <Button variant="lime" onClick={saveCompany}>
-            Save changes
+            {t("Save changes")}
           </Button>
         </div>
       </section>
@@ -115,12 +117,12 @@ export default function SettingsPage() {
         <div className="flex items-center gap-2">
           <UserIcon className="size-4 text-cobalt" />
           <h2 className="font-display text-base font-semibold text-forest">
-            Your profile
+            {t("Your profile")}
           </h2>
         </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="u-name">Full name</Label>
+            <Label htmlFor="u-name">{t("Full name")}</Label>
             <Input
               id="u-name"
               value={fullName}
@@ -128,7 +130,7 @@ export default function SettingsPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="u-email">Email</Label>
+            <Label htmlFor="u-email">{t("Email")}</Label>
             <Input
               id="u-email"
               type="email"
@@ -137,7 +139,7 @@ export default function SettingsPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="u-phone">Phone</Label>
+            <Label htmlFor="u-phone">{t("Phone")}</Label>
             <Input
               id="u-phone"
               value={phone}
@@ -147,7 +149,7 @@ export default function SettingsPage() {
         </div>
         <div className="mt-5 flex justify-end">
           <Button variant="lime" onClick={saveProfile}>
-            Save changes
+            {t("Save changes")}
           </Button>
         </div>
       </section>
@@ -157,7 +159,7 @@ export default function SettingsPage() {
         <div className="flex items-center gap-2">
           <Bell className="size-4 text-cobalt" />
           <h2 className="font-display text-base font-semibold text-forest">
-            Notifications
+            {t("Notifications")}
           </h2>
         </div>
         <div className="mt-5 space-y-4">
@@ -174,14 +176,14 @@ export default function SettingsPage() {
                 }
               />
               <Label htmlFor={`notif-${row.key}`} className="text-forest">
-                {row.label}
+                {t(row.label)}
               </Label>
             </div>
           ))}
         </div>
         <div className="mt-5 flex justify-end">
           <Button variant="lime" onClick={saveNotifications}>
-            Save changes
+            {t("Save changes")}
           </Button>
         </div>
       </section>

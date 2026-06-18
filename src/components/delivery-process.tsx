@@ -1,7 +1,9 @@
 import { deliverySteps } from "@/lib/data";
 import { Reveal } from "@/components/reveal";
+import { getT } from "@/lib/i18n/server";
 
-export function DeliveryProcess() {
+export async function DeliveryProcess() {
+  const t = await getT();
   return (
     <div className="relative">
       <div className="absolute left-[27px] top-4 bottom-4 hidden w-px bg-border md:block" />
@@ -19,10 +21,10 @@ export function DeliveryProcess() {
                 </div>
                 <div className="pt-1.5">
                   <h3 className="font-display text-lg font-semibold tracking-tight">
-                    {step.title}
+                    {t(step.title)}
                   </h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
+                    {t(step.description)}
                   </p>
                 </div>
               </li>

@@ -5,10 +5,12 @@ import { MessageSquare } from "lucide-react";
 import { EmptyState } from "@/components/dashboard/primitives";
 import { MessageThread } from "@/components/dashboard/message-thread";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 export default function MessagesPage() {
   const { projects, messages } = useApp();
+  const t = useT();
   const [selectedProjectId, setSelectedProjectId] = useState(
     projects[0]?.id ?? ""
   );
@@ -17,10 +19,10 @@ export default function MessagesPage() {
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
         <h1 className="font-display text-2xl font-semibold tracking-tight text-forest">
-          Messages
+          {t("Messages")}
         </h1>
         <p className="mt-2 text-sm text-forest/60">
-          Talk to your TopDoerr delivery pod.
+          {t("Talk to your TopDoerr delivery pod.")}
         </p>
       </div>
 
@@ -53,7 +55,7 @@ export default function MessagesPage() {
                 >
                   <p className="text-sm font-semibold text-forest">{p.title}</p>
                   <p className="mt-1 line-clamp-2 text-xs text-forest/55">
-                    {last ? last.body : "No messages yet."}
+                    {last ? last.body : t("No messages yet.")}
                   </p>
                 </button>
               );

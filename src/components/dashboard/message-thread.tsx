@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Send } from "lucide-react";
 import { Avatar } from "@/components/dashboard/primitives";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 import type { ProjectMessage } from "@/lib/dashboard/types";
 
@@ -15,6 +16,7 @@ export function MessageThread({
   messages: ProjectMessage[];
 }) {
   const { sendMessage } = useApp();
+  const t = useT();
   const [body, setBody] = useState("");
 
   const submit = () => {
@@ -28,7 +30,7 @@ export function MessageThread({
       <div className="flex-1 space-y-4 p-5">
         {messages.length === 0 && (
           <p className="py-8 text-center text-sm text-forest/50">
-            No messages yet. Start the conversation with your TopDoerr pod.
+            {t("No messages yet. Start the conversation with your TopDoerr pod.")}
           </p>
         )}
         {messages.map((m) => {
@@ -68,7 +70,7 @@ export function MessageThread({
           value={body}
           onChange={(e) => setBody(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submit()}
-          placeholder="Message TopDoerr…"
+          placeholder={t("Message TopDoerr…")}
           className="h-10 flex-1 rounded-full border border-forest/10 bg-cream/60 px-4 text-sm text-forest placeholder:text-forest/40 focus:border-cobalt/40 focus:outline-none"
         />
         <button

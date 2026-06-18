@@ -21,6 +21,7 @@ import { ServiceHeroArt } from "@/components/service-hero-art";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { verticals, getVertical } from "@/lib/data";
+import { getT } from "@/lib/i18n/server";
 
 export function generateStaticParams() {
   return verticals.map((v) => ({ slug: v.slug }));
@@ -68,11 +69,12 @@ const qaStandards = [
   },
 ];
 
-export default function ServiceDetailPage({
+export default async function ServiceDetailPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  const t = await getT();
   const v = getVertical(params.slug);
   if (!v) notFound();
 
@@ -88,17 +90,17 @@ export default function ServiceDetailPage({
             className="flex flex-wrap items-center gap-1.5 py-4 text-sm text-muted-foreground"
           >
             <Link href="/" className="transition-colors hover:text-foreground">
-              Home
+              {t("Home")}
             </Link>
             <ChevronRight className="size-3.5" />
             <Link
               href="/marketplace"
               className="transition-colors hover:text-foreground"
             >
-              Explore Services
+              {t("Explore Services")}
             </Link>
             <ChevronRight className="size-3.5" />
-            <span className="text-foreground">{v.name}</span>
+            <span className="text-foreground">{t(v.name)}</span>
           </nav>
         </div>
       </div>
@@ -116,26 +118,26 @@ export default function ServiceDetailPage({
                   <Icon className="size-7 text-electric" />
                 </div>
                 <h1 className="mt-6 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-                  {v.name}
+                  {t(v.name)}
                 </h1>
                 <p className="mt-4 text-lg leading-relaxed text-white/65 text-balance">
-                  {v.description}
+                  {t(v.description)}
                 </p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/80">
                   <span className="font-semibold text-white">
-                    {v.startingPrice}
+                    {t(v.startingPrice)}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <Clock className="size-4 text-electric" />
-                    {v.deliveryTime}
+                    {t(v.deliveryTime)}
                   </span>
                 </div>
 
                 <div className="mt-5 flex flex-wrap gap-1.5">
                   {v.tags.map((tag) => (
                     <Badge key={tag} variant="dark">
-                      {tag}
+                      {t(tag)}
                     </Badge>
                   ))}
                 </div>
@@ -143,7 +145,7 @@ export default function ServiceDetailPage({
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button asChild variant="electric" size="lg">
                     <Link href="/start">
-                      Start a Project
+                      {t("Start a Project")}
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>
@@ -152,7 +154,7 @@ export default function ServiceDetailPage({
                     size="lg"
                     className="bg-white/10 text-white hover:bg-white/20"
                   >
-                    <Link href="#packages">View packages</Link>
+                    <Link href="#packages">{t("View packages")}</Link>
                   </Button>
                 </div>
               </div>
@@ -164,9 +166,9 @@ export default function ServiceDetailPage({
       {/* Category description + services offered */}
       <Section className="py-16 sm:py-20">
         <SectionHeading
-          eyebrow="What's offered"
-          title={`Inside ${v.name}`}
-          description={v.shortDescription}
+          eyebrow={t("What's offered")}
+          title={`${t("Inside")} ${t(v.name)}`}
+          description={t(v.shortDescription)}
         />
         <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {v.services.map((service, i) => (
@@ -176,7 +178,7 @@ export default function ServiceDetailPage({
                   <Check className="size-3 text-electric" strokeWidth={3} />
                 </span>
                 <span className="text-sm font-medium leading-snug">
-                  {service}
+                  {t(service)}
                 </span>
               </div>
             </Reveal>
@@ -188,9 +190,9 @@ export default function ServiceDetailPage({
       <div id="packages" className="scroll-mt-24">
         <Section className="bg-secondary/30 py-16 sm:py-20">
           <SectionHeading
-            eyebrow="Packages"
-            title="Choose your package"
-            description="Transparent tiers with clear deliverables. Start where you are and scale into recurring delivery."
+            eyebrow={t("Packages")}
+            title={t("Choose your package")}
+            description={t("Transparent tiers with clear deliverables. Start where you are and scale into recurring delivery.")}
           />
           <div className="mt-12">
             <PackageTable packages={v.packages} />
@@ -201,9 +203,9 @@ export default function ServiceDetailPage({
       {/* Popular use cases */}
       <Section className="py-16 sm:py-20">
         <SectionHeading
-          eyebrow="Use cases"
-          title="Popular use cases"
-          description="A few of the outcomes clients ask TopDoerr to deliver in this category."
+          eyebrow={t("Use cases")}
+          title={t("Popular use cases")}
+          description={t("A few of the outcomes clients ask TopDoerr to deliver in this category.")}
         />
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {v.useCases.map((useCase, i) => (
@@ -213,7 +215,7 @@ export default function ServiceDetailPage({
                   <ArrowRight className="size-3.5" />
                 </span>
                 <p className="text-sm leading-relaxed text-foreground">
-                  {useCase}
+                  {t(useCase)}
                 </p>
               </div>
             </Reveal>
@@ -226,13 +228,13 @@ export default function ServiceDetailPage({
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <Reveal>
             <div className="h-full rounded-2xl border border-border bg-card p-8">
-              <SectionHeading eyebrow="Included" title="What's included" />
+              <SectionHeading eyebrow={t("Included")} title={t("What's included")} />
               <ul className="mt-7 space-y-4">
                 {v.includes.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm">
                     <Check className="mt-0.5 size-4 shrink-0 text-electric" />
                     <span className="leading-relaxed text-foreground">
-                      {item}
+                      {t(item)}
                     </span>
                   </li>
                 ))}
@@ -243,8 +245,8 @@ export default function ServiceDetailPage({
           <Reveal delay={0.08}>
             <div className="h-full rounded-2xl border border-border bg-card p-8">
               <SectionHeading
-                eyebrow="From you"
-                title="What TopDoerr needs from you"
+                eyebrow={t("From you")}
+                title={t("What TopDoerr needs from you")}
               />
               <ul className="mt-7 space-y-4">
                 {v.clientNeeds.map((item) => (
@@ -253,7 +255,7 @@ export default function ServiceDetailPage({
                       {v.clientNeeds.indexOf(item) + 1}
                     </span>
                     <span className="leading-relaxed text-foreground">
-                      {item}
+                      {t(item)}
                     </span>
                   </li>
                 ))}
@@ -268,9 +270,9 @@ export default function ServiceDetailPage({
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading
-              eyebrow="How it works"
-              title="From brief to deployed delivery."
-              description="Marketplace simplicity on the front. A managed delivery standard behind it."
+              eyebrow={t("How it works")}
+              title={t("From brief to deployed delivery.")}
+              description={t("Marketplace simplicity on the front. A managed delivery standard behind it.")}
             />
           </div>
           <DeliveryProcess />
@@ -280,9 +282,9 @@ export default function ServiceDetailPage({
       {/* QA & review standards */}
       <Section className="bg-secondary/30 py-16 sm:py-20">
         <SectionHeading
-          eyebrow="Quality control"
-          title="QA and review standards"
-          description="Internal talent. AI speed. Human review. Every engagement is held to one standard."
+          eyebrow={t("Quality control")}
+          title={t("QA and review standards")}
+          description={t("Internal talent. AI speed. Human review. Every engagement is held to one standard.")}
         />
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {qaStandards.map((standard, i) => {
@@ -294,10 +296,10 @@ export default function ServiceDetailPage({
                     <StandardIcon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {standard.title}
+                    {t(standard.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {standard.description}
+                    {t(standard.description)}
                   </p>
                 </div>
               </Reveal>
@@ -309,16 +311,16 @@ export default function ServiceDetailPage({
       {/* Add-ons */}
       <Section className="py-16 sm:py-20">
         <SectionHeading
-          eyebrow="Add-ons"
-          title="Extend your package"
-          description="Optional add-ons to tailor the delivery to your needs."
+          eyebrow={t("Add-ons")}
+          title={t("Extend your package")}
+          description={t("Optional add-ons to tailor the delivery to your needs.")}
         />
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {v.addOns.map((addOn, i) => (
             <Reveal key={addOn.name} delay={(i % 3) * 0.04}>
               <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-6">
                 <span className="text-sm font-medium leading-snug text-foreground">
-                  {addOn.name}
+                  {t(addOn.name)}
                 </span>
                 <span className="shrink-0 text-sm font-semibold text-foreground">
                   {addOn.price}
@@ -333,12 +335,14 @@ export default function ServiceDetailPage({
       <Section className="bg-secondary/30 py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <SectionHeading
-            eyebrow="FAQ"
-            title="Questions, answered."
-            description="Still curious? Reach out and TopDoerr will scope it with you."
+            eyebrow={t("FAQ")}
+            title={t("Questions, answered.")}
+            description={t("Still curious? Reach out and TopDoerr will scope it with you.")}
           />
           <div>
-            <FaqAccordion items={v.faq} />
+            <FaqAccordion
+              items={v.faq.map((item) => ({ q: t(item.q), a: t(item.a) }))}
+            />
           </div>
         </div>
       </Section>

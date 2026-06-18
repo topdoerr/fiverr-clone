@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useT } from "@/lib/i18n/client";
 
 export function ScrollRow({
   title,
@@ -10,6 +11,7 @@ export function ScrollRow({
   title: string;
   children: ReactNode;
 }) {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const scroll = (dir: number) =>
     ref.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
@@ -18,7 +20,7 @@ export function ScrollRow({
     <div>
       <div className="flex items-center justify-between gap-4">
         <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-          {title}
+          {t(title)}
         </h2>
         <div className="flex items-center gap-2">
           <button

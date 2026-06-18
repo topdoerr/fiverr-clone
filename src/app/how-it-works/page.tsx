@@ -6,6 +6,7 @@ import { DeliveryProcess } from "@/components/delivery-process";
 import { ComparisonTable } from "@/components/comparison-table";
 import { Badge } from "@/components/ui/badge";
 import { CTASection } from "@/components/cta-section";
+import { getT } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -34,7 +35,8 @@ const reviewPillars = [
   },
 ];
 
-export default function HowItWorksPage() {
+export default async function HowItWorksPage() {
+  const t = await getT();
   return (
     <>
       {/* Hero header band */}
@@ -43,25 +45,24 @@ export default function HowItWorksPage() {
           <Reveal>
             <span className="eyebrow">
               <span className="size-1.5 rounded-full bg-electric" />
-              How it works
+              {t("How it works")}
             </span>
           </Reveal>
           <Reveal delay={0.05}>
             <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-              From idea to deployed AI system.
+              {t("From idea to deployed AI system.")}
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 text-lg font-medium text-foreground">
-              Marketplace simplicity. Managed delivery.
+              {t("Marketplace simplicity. Managed delivery.")}
             </p>
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-3 text-base leading-relaxed text-muted-foreground text-balance">
-              You choose the outcome you want, submit a brief, and TopDoerr
-              assigns the internal pod to deliver it. No comparing hundreds of
-              sellers, no negotiating scope, no hoping the final delivery is
-              good. You buy the outcome — we manage the work.
+              {t(
+                "You choose the outcome you want, submit a brief, and TopDoerr assigns the internal pod to deliver it. No comparing hundreds of sellers, no negotiating scope, no hoping the final delivery is good. You buy the outcome — we manage the work."
+              )}
             </p>
           </Reveal>
         </div>
@@ -72,14 +73,16 @@ export default function HowItWorksPage() {
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading
-              eyebrow="The delivery process"
-              title="Five steps from brief to final delivery."
-              description="Marketplace simplicity on the front. A managed delivery standard behind it. Here is exactly what happens once you start."
+              eyebrow={t("The delivery process")}
+              title={t("Five steps from brief to final delivery.")}
+              description={t(
+                "Marketplace simplicity on the front. A managed delivery standard behind it. Here is exactly what happens once you start."
+              )}
             />
             <Reveal delay={0.1}>
               <div className="mt-8 flex flex-wrap gap-2">
-                <Badge variant="electric">Internal talent. AI speed.</Badge>
-                <Badge variant="electric">Human review.</Badge>
+                <Badge variant="electric">{t("Internal talent. AI speed.")}</Badge>
+                <Badge variant="electric">{t("Human review.")}</Badge>
               </div>
             </Reveal>
           </div>
@@ -91,9 +94,13 @@ export default function HowItWorksPage() {
       <Section className="bg-secondary/30">
         <SectionHeading
           align="center"
-          eyebrow="Why not freelancers"
-          title="Not a freelancer marketplace. A managed AI delivery system."
-          description="Traditional marketplaces make you compare hundreds of sellers, negotiate scope, and hope the final delivery is good. TopDoerr works differently. You choose the outcome, submit your brief, and our internal team assigns the right combination of AI strategists, builders, designers, engineers, and agents to deliver the work."
+          eyebrow={t("Why not freelancers")}
+          title={t(
+            "Not a freelancer marketplace. A managed AI delivery system."
+          )}
+          description={t(
+            "Traditional marketplaces make you compare hundreds of sellers, negotiate scope, and hope the final delivery is good. TopDoerr works differently. You choose the outcome, submit your brief, and our internal team assigns the right combination of AI strategists, builders, designers, engineers, and agents to deliver the work."
+          )}
           className="mb-12"
         />
         <ComparisonTable />
@@ -102,9 +109,11 @@ export default function HowItWorksPage() {
       {/* Internal talent. AI speed. Human review. */}
       <Section>
         <SectionHeading
-          eyebrow="Quality standard"
-          title="Internal talent. AI speed. Human review."
-          description="Every project runs through the same standard: AI does the heavy lifting, and people own the judgment. That is how we keep marketplace speed without marketplace risk."
+          eyebrow={t("Quality standard")}
+          title={t("Internal talent. AI speed. Human review.")}
+          description={t(
+            "Every project runs through the same standard: AI does the heavy lifting, and people own the judgment. That is how we keep marketplace speed without marketplace risk."
+          )}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reviewPillars.map((pillar, i) => {
@@ -116,10 +125,10 @@ export default function HowItWorksPage() {
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-base font-semibold">
-                    {pillar.title}
+                    {t(pillar.title)}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {pillar.description}
+                    {t(pillar.description)}
                   </p>
                 </div>
               </Reveal>

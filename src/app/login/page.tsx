@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 export default function LoginPage() {
   const { login, authMode } = useApp();
   const router = useRouter();
+  const t = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -37,7 +39,7 @@ export default function LoginPage() {
     >
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("Email")}</Label>
           <Input
             id="email"
             type="email"
@@ -48,9 +50,9 @@ export default function LoginPage() {
         </div>
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("Password")}</Label>
             <Link href="#" className="text-xs text-cobalt hover:underline">
-              Forgot password?
+              {t("Forgot password?")}
             </Link>
           </div>
           <Input
@@ -74,18 +76,18 @@ export default function LoginPage() {
           className="w-full"
           disabled={submitting}
         >
-          {submitting ? "Signing in…" : "Log In"}
+          {submitting ? t("Signing in…") : t("Log In")}
         </Button>
 
         <p className="text-center text-sm text-forest/60">
-          New to TopDoerr?{" "}
+          {t("New to TopDoerr?")}{" "}
           <Link href="/signup" className="font-medium text-cobalt hover:underline">
-            Create account
+            {t("Create account")}
           </Link>
         </p>
         {authMode === "supabase" && (
           <p className="text-center text-xs text-forest/40">
-            🔒 Secured by Supabase
+            {t("🔒 Secured by Supabase")}
           </p>
         )}
       </form>
