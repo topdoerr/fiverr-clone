@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { X, Mail, Apple, Check, ArrowRight } from "lucide-react";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 
 function GoogleIcon() {
   return (
@@ -28,6 +29,7 @@ export function AuthModal({
 }) {
   const router = useRouter();
   const { toast } = useApp();
+  const t = useT();
   const [mode, setMode] = useState<"join" | "signin">(initialMode);
 
   if (!open) return null;
@@ -94,7 +96,7 @@ export function AuthModal({
           />
           <div className="relative">
             <h3 className="font-display text-2xl font-semibold leading-tight">
-              AI execution starts here.
+              {t("AI execution starts here.")}
             </h3>
             <ul className="mt-6 space-y-3">
               {[
@@ -106,12 +108,12 @@ export function AuthModal({
                   <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-lime text-forest">
                     <Check className="size-3" strokeWidth={3} />
                   </span>
-                  {line}
+                  {t(line)}
                 </li>
               ))}
             </ul>
             <p className="mt-8 font-display text-base font-semibold text-lime">
-              Buy the Outcome. Not the Freelancer.
+              {t("Buy the Outcome. Not the Freelancer.")}
             </p>
           </div>
         </div>
@@ -119,27 +121,29 @@ export function AuthModal({
         {/* Form panel */}
         <div className="p-8 sm:p-9">
           <h2 className="font-display text-2xl font-semibold tracking-tight text-forest">
-            {mode === "join" ? "Create your account" : "Sign in to your account"}
+            {mode === "join"
+              ? t("Create your account")
+              : t("Sign in to your account")}
           </h2>
           <p className="mt-1.5 text-sm text-forest/60">
             {mode === "join" ? (
               <>
-                Already have an account?{" "}
+                {t("Already have an account?")}{" "}
                 <button
                   onClick={() => setMode("signin")}
                   className="font-medium text-cobalt hover:underline"
                 >
-                  Sign in
+                  {t("Sign in")}
                 </button>
               </>
             ) : (
               <>
-                Don&apos;t have an account?{" "}
+                {t("Don't have an account?")}{" "}
                 <button
                   onClick={() => setMode("join")}
                   className="font-medium text-cobalt hover:underline"
                 >
-                  Join here
+                  {t("Join here")}
                 </button>
               </>
             )}
@@ -151,14 +155,14 @@ export function AuthModal({
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-forest/15 bg-white px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-cream"
             >
               <GoogleIcon />
-              Continue with Google
+              {t("Continue with Google")}
             </button>
             <button
               onClick={() => oauth("apple")}
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-forest/15 bg-white px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-cream"
             >
               <Apple className="size-5" />
-              Continue with Apple
+              {t("Continue with Apple")}
             </button>
           </div>
 
@@ -173,13 +177,14 @@ export function AuthModal({
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-lime px-4 py-2.5 text-sm font-semibold text-forest transition-colors hover:bg-lime-soft"
           >
             <Mail className="size-4" />
-            Continue with Email
+            {t("Continue with Email")}
             <ArrowRight className="size-4" />
           </button>
 
           <p className="mt-6 text-xs leading-relaxed text-forest/40">
-            By continuing, you agree to TopDoerr&apos;s Terms of Service and
-            Privacy Policy.
+            {t(
+              "By continuing, you agree to TopDoerr's Terms of Service and Privacy Policy."
+            )}
           </p>
         </div>
       </div>

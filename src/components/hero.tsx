@@ -6,8 +6,10 @@ import { motion } from "framer-motion";
 import { Search, ArrowRight, Pause, Play } from "lucide-react";
 import { searchChips } from "@/lib/data";
 import { PartnerLogos } from "@/components/partner-logos";
+import { useT } from "@/lib/i18n/client";
 
 export function Hero() {
+  const t = useT();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(true);
 
@@ -65,14 +67,15 @@ export function Hero() {
           className="max-w-2xl"
         >
           <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl">
-            Buy AI outcomes.
+            {t("Buy AI outcomes.")}
             <br />
-            Delivered by TopDoerr.
+            {t("Delivered by TopDoerr.")}
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
-            Choose the outcome. We assign the internal AI talent, systems, and
-            agents to deliver it. No freelancers. No guessing. Just execution.
+            {t(
+              "Choose the outcome. We assign the internal AI talent, systems, and agents to deliver it. No freelancers. No guessing. Just execution."
+            )}
           </p>
 
           {/* Search */}
@@ -80,7 +83,9 @@ export function Hero() {
             <Search className="ml-3 size-5 shrink-0 text-muted-foreground" />
             <input
               className="h-11 w-full bg-transparent text-sm text-ink placeholder:text-muted-foreground focus:outline-none"
-              placeholder="What do you want AI to build, automate, or improve?"
+              placeholder={t(
+                "What do you want AI to build, automate, or improve?"
+              )}
             />
             <Link
               href="/marketplace"
@@ -99,7 +104,7 @@ export function Hero() {
                 href="/marketplace"
                 className="group inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-xs font-medium text-white/85 backdrop-blur-sm transition-colors hover:border-electric/50 hover:bg-white/10"
               >
-                {chip}
+                {t(chip)}
                 <ArrowRight className="size-3.5 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:text-electric" />
               </Link>
             ))}
@@ -112,7 +117,7 @@ export function Hero() {
         <div className="container-tight flex items-center justify-between gap-4 py-7">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <span className="text-xs font-medium uppercase tracking-widest text-white/45">
-              In partnership with
+              {t("In partnership with")}
             </span>
             <PartnerLogos />
           </div>

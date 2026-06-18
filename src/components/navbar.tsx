@@ -6,8 +6,10 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/language-toggle";
 import { navItems } from "@/lib/data";
 import { useApp } from "@/lib/dashboard/store";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 function openAuth(mode: "join" | "signin") {
@@ -19,6 +21,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { isAuthed } = useApp();
+  const t = useT();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -57,7 +60,7 @@ export function Navbar() {
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
-                    {item.label}
+                    {t(item.label)}
                   </Link>
                 </li>
               );
@@ -66,14 +69,15 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <LanguageToggle />
           {isAuthed ? (
             <>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/marketplace">Explore Services</Link>
+                <Link href="/marketplace">{t("Explore Services")}</Link>
               </Button>
               <Button asChild variant="electric" size="sm">
                 <Link href="/dashboard">
-                  Go to Dashboard
+                  {t("Go to Dashboard")}
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -85,14 +89,14 @@ export function Navbar() {
                 size="sm"
                 onClick={() => openAuth("signin")}
               >
-                Sign in
+                {t("Sign in")}
               </Button>
               <Button
                 variant="electric"
                 size="sm"
                 onClick={() => openAuth("join")}
               >
-                Join TopDoerr
+                {t("Join TopDoerr")}
                 <ArrowRight className="size-4" />
               </Button>
             </>
@@ -117,18 +121,18 @@ export function Navbar() {
                 href={item.href}
                 className="rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
               >
-                {item.label}
+                {t(item.label)}
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2">
               {isAuthed ? (
                 <>
                   <Button asChild variant="outline">
-                    <Link href="/marketplace">Explore Services</Link>
+                    <Link href="/marketplace">{t("Explore Services")}</Link>
                   </Button>
                   <Button asChild variant="electric">
                     <Link href="/dashboard">
-                      Go to Dashboard
+                      {t("Go to Dashboard")}
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>
@@ -136,14 +140,17 @@ export function Navbar() {
               ) : (
                 <>
                   <Button variant="outline" onClick={() => openAuth("signin")}>
-                    Sign in
+                    {t("Sign in")}
                   </Button>
                   <Button variant="electric" onClick={() => openAuth("join")}>
-                    Join TopDoerr
+                    {t("Join TopDoerr")}
                     <ArrowRight className="size-4" />
                   </Button>
                 </>
               )}
+              <div className="pt-1">
+                <LanguageToggle />
+              </div>
             </div>
           </div>
         </div>

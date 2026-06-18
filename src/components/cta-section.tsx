@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
+import { getT } from "@/lib/i18n/server";
 
-export function CTASection({
+export async function CTASection({
   title = "Ready to turn AI into real work?",
   description = "Start with one project. TopDoerr will help scope it, assign the right internal team, and deliver the outcome.",
   primary = { label: "Start a Project", href: "/start" },
@@ -14,6 +15,7 @@ export function CTASection({
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
 }) {
+  const t = await getT();
   return (
     <section className="py-20 sm:py-28">
       <div className="container-tight">
@@ -23,15 +25,15 @@ export function CTASection({
             <div className="absolute left-1/2 top-0 h-40 w-[36rem] -translate-x-1/2 rounded-full bg-electric/20 blur-[100px]" />
             <div className="relative">
               <h2 className="mx-auto max-w-2xl font-display text-3xl font-semibold tracking-tight text-white text-balance sm:text-4xl">
-                {title}
+                {t(title)}
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-base text-white/60 text-balance">
-                {description}
+                {t(description)}
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button asChild variant="electric" size="lg">
                   <Link href={primary.href}>
-                    {primary.label}
+                    {t(primary.label)}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -40,7 +42,7 @@ export function CTASection({
                   size="lg"
                   className="bg-white/10 text-white hover:bg-white/20"
                 >
-                  <Link href={secondary.href}>{secondary.label}</Link>
+                  <Link href={secondary.href}>{t(secondary.label)}</Link>
                 </Button>
               </div>
             </div>
