@@ -19,7 +19,6 @@ import { FaqAccordion } from "@/components/faq-accordion";
 import { PromoBanners } from "@/components/promo-banners";
 import { GuidesSection } from "@/components/guides-section";
 import { BigCta } from "@/components/big-cta";
-import { EditorialTestimonials } from "@/components/editorial-testimonials";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -28,6 +27,7 @@ import {
   whyFeatures,
   enterpriseFeatures,
   globalFaq,
+  testimonials,
 } from "@/lib/data";
 
 const whyIcons = [Boxes, Gauge, Eye, BadgeCheck, ShieldCheck, TrendingUp];
@@ -204,8 +204,37 @@ export default function HomePage() {
       {/* Guides */}
       <GuidesSection />
 
-      {/* Testimonials — editorial band */}
-      <EditorialTestimonials />
+      {/* Testimonials */}
+      <Section className="bg-secondary/30">
+        <SectionHeading
+          align="center"
+          eyebrow="Testimonials"
+          title="One accountable AI partner."
+          className="mb-12"
+        />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {testimonials.map((t, i) => (
+            <Reveal key={t.name} delay={(i % 2) * 0.06}>
+              <figure className="h-full rounded-2xl border border-border bg-card p-7">
+                <blockquote className="text-base leading-relaxed text-foreground">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-full bg-ink text-sm font-semibold text-electric">
+                    {t.initials}
+                  </span>
+                  <span>
+                    <span className="block text-sm font-semibold">{t.name}</span>
+                    <span className="block text-xs text-muted-foreground">
+                      {t.role}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       {/* FAQ */}
       <Section>
