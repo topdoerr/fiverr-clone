@@ -94,7 +94,7 @@ export function MarketplaceExplorer() {
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((v, i) => (
             <Reveal key={v.slug} delay={(i % 3) * 0.05}>
-              <ServiceCard vertical={v} />
+              <ServiceCard slug={v.slug} />
             </Reveal>
           ))}
         </div>

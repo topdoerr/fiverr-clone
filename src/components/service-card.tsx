@@ -4,10 +4,15 @@ import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useT } from "@/lib/i18n/client";
-import type { Vertical } from "@/lib/data";
+import { getVertical } from "@/lib/data";
 
-export function ServiceCard({ vertical }: { vertical: Vertical }) {
+// Takes a slug (a serializable string) rather than the vertical object so a
+// Server Component parent never has to pass the Lucide icon function across the
+// client boundary. The vertical is resolved here from the client-safe data.
+export function ServiceCard({ slug }: { slug: string }) {
   const t = useT();
+  const vertical = getVertical(slug);
+  if (!vertical) return null;
   const Icon = vertical.icon;
   return (
     <Link

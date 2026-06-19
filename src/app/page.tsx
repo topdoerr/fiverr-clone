@@ -81,7 +81,7 @@ export default async function HomePage() {
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {verticals.slice(0, 6).map((v) => (
             <Reveal key={v.slug}>
-              <ServiceCard vertical={v} />
+              <ServiceCard slug={v.slug} />
             </Reveal>
           ))}
         </div>
