@@ -4,6 +4,7 @@ import { home } from "./dict/home";
 import { marketplace } from "./dict/marketplace";
 import { pages } from "./dict/pages";
 import { dashboard } from "./dict/dashboard";
+import { extra } from "./dict/extra";
 
 // Merge the base dictionary with per-area modules (later spreads win on overlap).
 const dict: Record<string, string> = {
@@ -12,6 +13,7 @@ const dict: Record<string, string> = {
   ...marketplace,
   ...pages,
   ...dashboard,
+  ...extra,
 };
 
 /** Translate an English source string for the given locale. Falls back to the

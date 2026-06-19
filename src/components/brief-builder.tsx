@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useT } from "@/lib/i18n/client";
 
 const TOTAL_STEPS = 6;
 
@@ -65,6 +66,7 @@ function OptionGrid({
   onSelect: (v: string) => void;
   columns?: 2 | 3;
 }) {
+  const t = useT();
   return (
     <div
       className={cn(
@@ -86,7 +88,7 @@ function OptionGrid({
                 : "border-border bg-card text-foreground hover:border-foreground/20 hover:bg-secondary/50"
             )}
           >
-            {option}
+            {t(option)}
             <span
               className={cn(
                 "flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors",
@@ -105,6 +107,7 @@ function OptionGrid({
 }
 
 export function BriefBuilder() {
+  const t = useT();
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -178,37 +181,42 @@ export function BriefBuilder() {
             <CheckCircle2 className="size-8" strokeWidth={2.5} />
           </div>
           <h2 className="mt-6 font-display text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-            Your AI project brief is ready.
+            {t("Your AI project brief is ready.")}
           </h2>
           <p className="mt-3 text-base leading-relaxed text-muted-foreground text-balance">
-            TopDoerr will review your brief, confirm the scope, and assign the
-            right internal delivery pod.
+            {t(
+              "TopDoerr will review your brief, confirm the scope, and assign the right internal delivery pod."
+            )}
           </p>
         </div>
 
         <div className="mx-auto mt-8 max-w-xl rounded-2xl border border-border bg-secondary/40 p-6 text-left">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Your brief
+            {t("Your brief")}
           </h3>
           <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-            <SummaryRow label="Goal" value={answers.goal} />
-            <SummaryRow label="Industry" value={answers.industry} />
+            <SummaryRow label={t("Goal")} value={t(answers.goal)} />
+            <SummaryRow label={t("Industry")} value={t(answers.industry)} />
             <SummaryRow
-              label="Tools"
-              value={answers.tools.length ? answers.tools.join(", ") : "—"}
+              label={t("Tools")}
+              value={
+                answers.tools.length
+                  ? answers.tools.map((x) => t(x)).join(", ")
+                  : "—"
+              }
             />
-            <SummaryRow label="Urgency" value={answers.urgency} />
-            <SummaryRow label="Budget" value={answers.budget} />
+            <SummaryRow label={t("Urgency")} value={t(answers.urgency)} />
+            <SummaryRow label={t("Budget")} value={t(answers.budget)} />
             {answers.website && (
-              <SummaryRow label="Website" value={answers.website} />
+              <SummaryRow label={t("Website")} value={answers.website} />
             )}
-            {answers.name && <SummaryRow label="Name" value={answers.name} />}
-            {answers.email && <SummaryRow label="Email" value={answers.email} />}
+            {answers.name && <SummaryRow label={t("Name")} value={answers.name} />}
+            {answers.email && <SummaryRow label={t("Email")} value={answers.email} />}
           </dl>
           {answers.notes && (
             <div className="mt-4 border-t border-border pt-4">
               <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Notes
+                {t("Notes")}
               </dt>
               <dd className="mt-1 text-sm leading-relaxed text-foreground">
                 {answers.notes}
@@ -219,7 +227,7 @@ export function BriefBuilder() {
 
         <div className="mx-auto mt-8 flex max-w-xl flex-col items-center justify-center gap-3 sm:flex-row">
           <Button variant="electric" size="lg" className="w-full sm:w-auto">
-            Submit Project
+            {t("Submit Project")}
             <ArrowRight className="size-4" />
           </Button>
           <Button
@@ -228,7 +236,7 @@ export function BriefBuilder() {
             size="lg"
             className="w-full sm:w-auto"
           >
-            <Link href="/start">Book a Strategy Call</Link>
+            <Link href="/start">{t("Book a Strategy Call")}</Link>
           </Button>
         </div>
 
@@ -239,7 +247,7 @@ export function BriefBuilder() {
             className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             <RotateCcw className="size-3.5" />
-            Start over
+            {t("Start over")}
           </button>
         </div>
       </div>
@@ -251,7 +259,7 @@ export function BriefBuilder() {
       {/* Progress */}
       <div className="flex items-center justify-between gap-4">
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Step {step} of {TOTAL_STEPS}
+          {t("Step")} {step} {t("of")} {TOTAL_STEPS}
         </span>
         <span className="text-xs font-medium text-muted-foreground">
           {Math.round(progress)}%
@@ -267,7 +275,7 @@ export function BriefBuilder() {
       </div>
 
       <h2 className="mt-7 font-display text-xl font-semibold tracking-tight text-balance sm:text-2xl">
-        {stepTitles[step - 1]}
+        {t(stepTitles[step - 1])}
       </h2>
 
       <div className="relative mt-6 min-h-[260px]">
@@ -323,7 +331,7 @@ export function BriefBuilder() {
                         htmlFor={id}
                         className="cursor-pointer font-medium"
                       >
-                        {tool}
+                        {t(tool)}
                       </Label>
                     </label>
                   );
@@ -350,7 +358,7 @@ export function BriefBuilder() {
             {step === 6 && (
               <div className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="website">Website URL</Label>
+                  <Label htmlFor="website">{t("Website URL")}</Label>
                   <Input
                     id="website"
                     type="url"
@@ -361,40 +369,42 @@ export function BriefBuilder() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Notes &amp; context</Label>
+                  <Label htmlFor="notes">{t("Notes & context")}</Label>
                   <Textarea
                     id="notes"
-                    placeholder="Tell us anything that helps us scope the work — goals, constraints, examples you like…"
+                    placeholder={t(
+                      "Tell us anything that helps us scope the work — goals, constraints, examples you like…"
+                    )}
                     value={answers.notes}
                     onChange={(e) => update("notes", e.target.value)}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Files</Label>
+                  <Label>{t("Files")}</Label>
                   <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-secondary/30 px-6 py-8 text-center">
                     <UploadCloud className="size-6 text-muted-foreground" />
                     <p className="mt-3 text-sm font-medium text-foreground">
-                      Drag &amp; drop files here
+                      {t("Drag & drop files here")}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Briefs, brand assets, spreadsheets, screenshots — optional
+                      {t("Briefs, brand assets, spreadsheets, screenshots — optional")}
                     </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">{t("Name")}</Label>
                     <Input
                       id="name"
-                      placeholder="Your name"
+                      placeholder={t("Your name")}
                       value={answers.name}
                       onChange={(e) => update("name", e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t("Email")}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -420,7 +430,7 @@ export function BriefBuilder() {
           className={cn(step === 1 && "invisible")}
         >
           <ArrowLeft className="size-4" />
-          Back
+          {t("Back")}
         </Button>
         <Button
           type="button"
@@ -428,7 +438,7 @@ export function BriefBuilder() {
           onClick={goNext}
           disabled={!canContinue}
         >
-          {step === TOTAL_STEPS ? "Review brief" : "Continue"}
+          {step === TOTAL_STEPS ? t("Review brief") : t("Continue")}
           <ArrowRight className="size-4" />
         </Button>
       </div>

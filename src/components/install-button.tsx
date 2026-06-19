@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
+import { useT } from "@/lib/i18n/client";
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -9,6 +10,7 @@ type BeforeInstallPromptEvent = Event & {
 };
 
 export function InstallButton() {
+  const t = useT();
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
 
@@ -41,7 +43,7 @@ export function InstallButton() {
       className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/15"
     >
       <Download className="size-4 text-electric" />
-      Install the app
+      {t("Install the app")}
     </button>
   );
 }

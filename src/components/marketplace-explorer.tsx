@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/reveal";
 import { ServiceCard } from "@/components/service-card";
 import { verticals } from "@/lib/data";
+import { useT } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 const ALL_TAG = "All";
 
 export function MarketplaceExplorer() {
+  const t = useT();
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string>(ALL_TAG);
 
@@ -47,8 +49,8 @@ export function MarketplaceExplorer() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search AI services, outcomes, or tools…"
-          aria-label="Search AI services"
+          placeholder={t("Search AI services, outcomes, or tools…")}
+          aria-label={t("Search AI services")}
           className="h-12 pl-11"
         />
       </div>
@@ -70,7 +72,7 @@ export function MarketplaceExplorer() {
                   : "border-border bg-card text-muted-foreground hover:border-foreground/20 hover:text-foreground"
               )}
             >
-              {tag}
+              {t(tag)}
             </button>
           );
         })}
@@ -78,11 +80,11 @@ export function MarketplaceExplorer() {
 
       {/* Results meta */}
       <p className="mt-8 text-sm text-muted-foreground">
-        {results.length} {results.length === 1 ? "service" : "services"}
+        {results.length} {results.length === 1 ? t("service") : t("services")}
         {activeTag !== ALL_TAG && (
           <>
             {" "}
-            in <span className="text-foreground">{activeTag}</span>
+            {t("in")} <span className="text-foreground">{t(activeTag)}</span>
           </>
         )}
       </p>
@@ -102,11 +104,12 @@ export function MarketplaceExplorer() {
             <SearchX className="size-5 text-muted-foreground" />
           </div>
           <h3 className="mt-5 font-display text-lg font-semibold">
-            No services match your search
+            {t("No services match your search")}
           </h3>
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Try a different keyword or clear the filters. If you can&apos;t find
-            it, TopDoerr can still scope it with you.
+            {t(
+              "Try a different keyword or clear the filters. If you can't find it, TopDoerr can still scope it with you."
+            )}
           </p>
           <button
             type="button"
@@ -116,7 +119,7 @@ export function MarketplaceExplorer() {
             }}
             className="mt-6 text-sm font-medium text-foreground underline-offset-4 hover:underline"
           >
-            Clear search and filters
+            {t("Clear search and filters")}
           </button>
         </div>
       )}
